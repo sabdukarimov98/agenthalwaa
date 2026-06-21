@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#143D2E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>HALWAA · Мобильный</title>
+<style>
+:root{--bg:#F4F5F7;--ink:#1C2536;--muted:#8A94A6;--line:#EAEDF2;--card:#FFFFFF;--navy:#1E2A44;--navy2:#28365A;--accent:#3B6FE0;--accent2:#5B8DEF;--gold:#C9A227;--green:#1E9E6A;--red:#E2574C;--blue:#3B6FE0;--amber:#E0922F}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-size:14.5px;padding-bottom:84px}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);color:var(--ink);padding:16px 18px 10px;display:flex;align-items:center;justify-content:space-between}
+.top b{font-size:21px;letter-spacing:-.3px;font-weight:800}
+.top .tools{display:flex;align-items:center;gap:14px}
+.top .ic{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:1.9}
+.ava{width:42px;height:42px;border-radius:50%;background:var(--navy) center/cover;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px}
+.wrap{padding:4px 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(28,37,54,.04)}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px;color:var(--navy);letter-spacing:-.5px}
+.kpi .v small{font-size:12px;color:var(--muted);font-weight:600}
+.hint{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;padding:4px 10px;border-radius:8px;font-size:11.5px;font-weight:700}
+.pill.green{background:#E4F5EC;color:#1E9E6A}.pill.red{background:#FCE9E7;color:#E2574C}
+.pill.gold{background:#F6EFD8;color:#8a6d0f}.pill.blue{background:#E8F0FE;color:#3B6FE0}
+.pill.gray{background:#EEF1F5;color:#6B7689}.pill.amber{background:#FBF0DF;color:#E0922F}
+.btn{display:block;width:100%;border:none;border-radius:14px;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;text-align:center;transition:transform .08s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.gold{background:var(--accent);color:#fff}
+.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--navy)}
+.btn.danger{background:#fff;border:1.5px solid #F2C9C5;color:var(--red)}
+.btn.sm{width:auto;display:inline-block;padding:9px 14px;font-size:13px;border-radius:11px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:13px;border:1.5px solid var(--line);border-radius:13px;font-size:15px;background:#fff;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:25;padding:6px 0 calc(6px + env(safe-area-inset-bottom));box-shadow:0 -2px 16px rgba(28,37,54,.06)}
+.nav button{flex:1;border:none;background:none;padding:8px 2px;font-size:11px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600}
+.nav button.on{color:var(--navy);font-weight:700}
+.nav button.on .navic{background:#EEF1F8}
+.navic{width:46px;height:30px;border-radius:14px;display:grid;place-items:center;transition:background .15s}
+.nav svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.chiprow{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:11px}
+.chip{flex:0 0 auto;padding:11px 20px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:7px}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.search{display:flex;gap:8px;margin-bottom:14px}
+.search input{flex:1;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font-size:15px;background:#fff}
+.modal-bg{position:fixed;inset:0;background:rgba(20,28,44,.45);z-index:40;display:none;align-items:flex-end}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg);width:100%;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.modal h2{font-size:18px;margin-bottom:14px;color:var(--navy);font-weight:800}
+.toast{position:fixed;left:14px;right:14px;bottom:90px;background:var(--navy);color:#fff;padding:13px 16px;border-radius:13px;z-index:60;font-size:13.5px;display:none}
+.prodimg{width:54px;height:54px;border-radius:12px;background:#EEF1F5 center/cover;flex:0 0 auto}
+.qty{width:74px;padding:10px;border:1.5px solid var(--line);border-radius:11px;text-align:center;font-weight:800;font-size:15px}
+.fab{position:fixed;right:16px;bottom:96px;z-index:26;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:16px 22px;font-weight:700;font-size:15px;box-shadow:0 8px 24px rgba(59,111,224,.4)}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;color:var(--navy);font-size:17px}
+.seg{display:flex;background:#EAEDF2;border-radius:13px;padding:4px;margin-bottom:12px}
+.seg button{flex:1;border:none;background:none;padding:10px;border-radius:10px;font-weight:700;font-size:13px;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.pinpad{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:280px;margin:20px auto}
+.pinpad button{aspect-ratio:1;border-radius:50%;border:none;background:#fff;font-size:24px;font-weight:600;color:var(--navy);transition:transform .08s;box-shadow:0 1px 3px rgba(28,37,54,.06)}
+.pinpad button:active{transform:scale(.92);background:#EEF1F8}
+.pindots{display:flex;gap:16px;justify-content:center;margin:20px 0}
+.pindots i{width:14px;height:14px;border-radius:50%;background:#D5DBE5;display:block;transition:background .15s}
+.pindots i.f{background:var(--navy)}
+.center{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:24px}
+.bar{height:9px;background:#E4E8EF;border-radius:99px;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+#map,#pickmap{height:48vh;border-radius:16px;border:1px solid var(--line)}
+#pickmap{height:38vh}
+.empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:13.5px}
+.logo{width:72px;height:72px;border-radius:20px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:34px;font-weight:800;font-family:Georgia,serif;margin:0 auto 16px}
+.locbtn{position:absolute;right:12px;bottom:12px;z-index:5;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 13px;font-weight:700;font-size:13px;color:var(--navy);box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-bottom:14px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer}
+.tile svg{width:28px;height:28px;stroke:var(--navy);fill:none;stroke-width:1.7}
+.tile span{font-size:12.5px;font-weight:600;color:var(--ink);text-align:center;line-height:1.25}
+.summary{background:var(--navy);color:#fff;border-radius:18px;padding:18px;margin-bottom:14px}
+.summary h4{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between}
+.summary .sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;font-size:14px;color:#B8C2D6}
+.summary .sr b{color:#fff;font-size:15px}
+.summary .sbar{flex:1;height:7px;background:rgba(255,255,255,.12);border-radius:99px;margin:0 12px;overflow:hidden}
+.summary .sbar i{display:block;height:100%;background:var(--accent2);border-radius:99px}
+.rcard{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.rcard .rtop{padding:15px 16px 13px}
+.rcard .rname{font-size:16px;font-weight:700;color:var(--navy)}
+.rcard .raddr{font-size:13px;color:var(--muted);margin-top:2px}
+.rcard .ract{display:flex;border-top:1px solid var(--line)}
+.rcard .ract button{flex:1;border:none;background:none;padding:13px;font-weight:700;font-size:14px;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:7px}
+.rcard .ract button:first-child{border-right:1px solid var(--line)}
+.rcard .ract svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9}
+.ccard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:11px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ccard .cph{width:54px;height:54px;border-radius:13px;background:#EEF1F5 center/cover;flex:0 0 auto;display:grid;place-items:center}
+.ccard .cph svg{width:26px;height:26px;stroke:#B6C0D0;fill:none;stroke-width:1.6}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:92px;z-index:24;display:flex;gap:10px}
+.dock button{background:var(--navy);color:#fff;border:none;border-radius:999px;padding:15px 26px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 22px rgba(28,37,54,.28)}
+.dock button svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.9}
+</style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1F4D3A">
+<link rel="apple-touch-icon" href="/icon-192.png">
+</head>
+<body>
+<div id="app"></div>
+<div class="modal-bg" id="mbg" onclick="if(event.target===this)closeM()"><div class="modal" id="mbody"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===================== НАСТРОЙКА ОБЛАКА =====================
+   Вставь сюда URL и anon key проекта Supabase (Settings → API),
+   те же, что в админке (Настройки → Интеграции → Облако): */
+const SB_URL = "https://wgkilpzxhmwqsnfytwya.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indna2lscHp4aG13cXNuZnl0d3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyNjYyODAsImV4cCI6MjA5Njg0MjI4MH0.HK5y6_IbH8SHSFBRT5x6UDWRazEx2BtCC6aOfdJYBXU";
+/* ============================================================ */
+
+const $=s=>document.querySelector(s);
+const uid=p=>(p||'x')+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2600);}
+const tz=()=>new Date(Date.now()+(5*60+new Date().getTimezoneOffset())*60000);
+const today=()=>tz().toISOString().slice(0,10);
+const now=()=>{const d=tz();return d.toISOString().slice(0,16);};
+const addDays=(s,n)=>{const d=new Date(s+'T12:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);};
+const money=n=>new Intl.NumberFormat('ru-RU').format(Math.round(n||0))+' сум';
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ---------- i18n ---------- */
+const I18N={
+ ru:{dash:'Дашборд',routes:'Маршруты',clients:'Клиенты',catalog:'Каталог',more:'Ещё',login:'Вход',loginB:'Войти',loginH:'Логин и пароль выдаёт администратор',
+  visitsToday:'Визиты сегодня',plan:'План визитов',orders:'Заказов сегодня',sum:'Сумма заказов',akb:'АКБ (актив. клиенты)',yest:'Факт вчера (доставлено)',
+  search:'Поиск…',visited:'посещён',notVisited:'не посещён',dist:'км',startVisit:'Начать визит',endVisit:'Завершить визит',photo:'Фотоотчёт',
+  order:'Заказ',ret:'Возврат',refuse:'Отказ',comment:'Комментарий',cart:'Корзина',doOrder:'Оформить заказ',client:'Клиент',payment:'Оплата',
+  cash:'Наличные',terminal:'Терминал',transfer:'Безналичный',consign:'Консигнация',consignDays:'Дней консигнации',consignComment:'Комментарий (обязателен)',
+  total:'Итого',send:'Отправить',history:'История',kpi:'KPI и бонусы',ships:'Отгрузки',profile:'Профиль',lang:'Язык',pin:'PIN-код',
+  setPin:'Установить PIN',changePin:'Изменить PIN',logout:'Выйти из аккаунта',addAcc:'Добавить аккаунт',accounts:'Аккаунты',
+  retType:'Тип возврата',shelf:'С полки',exch:'Обмен',expired:'Просрочка',byOrder:'По заказу',pickOrder:'Выберите заказ',
+  reason:'Причина',sendOk:'Отправлено',offline:'Нет связи — сохранено, отправится позже',pend:'Ожидают отправки',
+  noData:'Нет данных. Попросите администратора нажать «Выгрузить в облако».',map:'Карта',route:'Маршрут',all:'Все',
+  enterPin:'Введите PIN',newPin:'Придумайте PIN (4 цифры)',repPin:'Повторите PIN',wrongPin:'Неверный PIN',wrongLogin:'Неверный логин или пароль',
+  status:'Статус',del:'Доставлено',canc:'Отказ',pending:'В пути',myOrders:'Мои заказы',today2:'Сегодня',sync:'Обновить данные',pinProtect:'Защитить PIN-кодом?',pinProtectH:'Можно установить PIN для входа или пропустить — тогда вход без пароля.',skip:'Пропустить',moreAcc:'точнее',saved:'Черновик сохранён',expense:'Мои расходы',expCat:'Категория расхода',sum:'Сумма',myClients2:'Мои',allClients:'Все клиенты',buildRoute:'Построить маршрут'},
+ uz:{dash:'Boshqaruv',routes:'Marshrutlar',clients:'Mijozlar',catalog:'Katalog',more:'Yana',login:'Kirish',loginB:'Kirish',loginH:'Login va parolni administrator beradi',
+  visitsToday:'Bugungi tashriflar',plan:'Tashrif rejasi',orders:'Bugungi buyurtmalar',sum:'Buyurtmalar summasi',akb:'AKB (faol mijozlar)',yest:'Kechagi fakt (yetkazildi)',
+  search:'Qidirish…',visited:'tashrif qilindi',notVisited:'tashrif yo‘q',dist:'km',startVisit:'Tashrifni boshlash',endVisit:'Tashrifni yakunlash',photo:'Fotohisobot',
+  order:'Buyurtma',ret:'Qaytarish',refuse:'Rad etish',comment:'Izoh',cart:'Savat',doOrder:'Buyurtma berish',client:'Mijoz',payment:'To‘lov',
+  cash:'Naqd',terminal:'Terminal',transfer:'O‘tkazma',consign:'Konsignatsiya',consignDays:'Konsignatsiya kunlari',consignComment:'Izoh (majburiy)',
+  total:'Jami',send:'Yuborish',history:'Tarix',kpi:'KPI va bonuslar',ships:'Yuk jo‘natmalar',profile:'Profil',lang:'Til',pin:'PIN-kod',
+  setPin:'PIN o‘rnatish',changePin:'PIN o‘zgartirish',logout:'Akkauntdan chiqish',addAcc:'Akkaunt qo‘shish',accounts:'Akkauntlar',
+  retType:'Qaytarish turi',shelf:'Peshtaxtadan',exch:'Almashtirish',expired:'Muddati o‘tgan',byOrder:'Buyurtma bo‘yicha',pickOrder:'Buyurtmani tanlang',
+  reason:'Sabab',sendOk:'Yuborildi',offline:'Aloqa yo‘q — saqlandi, keyin yuboriladi',pend:'Yuborish kutilmoqda',
+  noData:'Ma’lumot yo‘q. Administrator «Bulutga yuklash» tugmasini bossin.',map:'Xarita',route:'Marshrut',all:'Hammasi',
+  enterPin:'PIN kiriting',newPin:'PIN o‘ylab toping (4 raqam)',repPin:'PINni takrorlang',wrongPin:'PIN noto‘g‘ri',wrongLogin:'Login yoki parol noto‘g‘ri',
+  status:'Holat',del:'Yetkazildi',canc:'Rad',pending:'Yo‘lda',myOrders:'Mening buyurtmalarim',today2:'Bugun',sync:'Yangilash',pinProtect:'PIN-kod bilan himoyalansinmi?',pinProtectH:'Kirish uchun PIN o‘rnatishingiz yoki o‘tkazib yuborishingiz mumkin.',skip:'O‘tkazib yuborish',moreAcc:'aniqroq',saved:'Qoralama saqlandi',expense:'Mening xarajatlarim',expCat:'Xarajat turi',sum:'Summa',myClients2:'Mening',allClients:'Barcha mijozlar',buildRoute:'Marshrut tuzish'}
+};
+function T(k){return (I18N[ST.lang]||I18N.ru)[k]||k;}
+
+/* ---------- локальное состояние ---------- */
+let ST=JSON.parse(localStorage.getItem('halwaa_mob')||'{}');
+ST.lang=ST.lang||'ru';ST.accounts=ST.accounts||[];ST.cur=ST.cur||null;ST.outbox=ST.outbox||[];ST.pin=ST.pin||null;
+let DATA={};         // справочники из crm_kv
+let MYTX=[];         // мои операции из crm_tx
+let VIEW='dash', NAVH=[];
+let VISIT=null;      // активный визит {client,startAt,photo,actions:[]}
+let CART={};         // pid -> qty
+let GEO=null;
+function save(){localStorage.setItem('halwaa_mob',JSON.stringify(ST));}
+function me(){return ST.accounts.find(a=>a.id===ST.cur)||null;}
+
+/* ---------- Supabase REST ---------- */
+function sbOk(){return SB_URL.startsWith('https://')&&SB_KEY.length>20;}
+function H(){return {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};}
+async function kvLoad(){
+  const r=await fetch(SB_URL+'/rest/v1/crm_kv?select=key,value',{headers:H()});
+  if(!r.ok)throw new Error('kv '+r.status);
+  const rows=await r.json();DATA={};rows.forEach(x=>DATA[x.key]=x.value);
+  mergeLocalClients();refreshAccounts();
+  localStorage.setItem('halwaa_mob_data',JSON.stringify(DATA));
+}
+/* клиенты, добавленные с этого телефона и ещё не влитые админкой — не должны пропадать */
+function mergeLocalClients(){
+  DATA.clients=DATA.clients||[];
+  [...ST.outbox,...MYTX].filter(t=>t.type==='client').forEach(t=>{
+    if(!DATA.clients.some(c=>c.id===t.id||c.id===t.payload.id))DATA.clients.push(t.payload);});
+}
+/* админка — источник истины: обновляем имя/фото/план/запреты, выкидываем удалённых и неактивных */
+function refreshAccounts(){
+  const emps=L('employees');if(!emps.length)return;
+  let kicked=false,kickName='';
+  ST.accounts=ST.accounts.filter(a=>{
+    if(a.id==='demo')return true;   // демо-аккаунт не зависит от облака
+    const e=emps.find(x=>x.id===a.id);
+    if(!e||e.active===false){if(a.id===ST.cur){kicked=true;kickName=a.name;}return false;}
+    a.name=e.name;a.role=e.role;a.login=e.login;a.password=e.password;a.photo=e.photo||'';a.terr=e.terr||'';a.plan=e.plan||25;
+    a.restrictCats=e.restrictCats||[];a.restrictProducts=e.restrictProducts||[];a.restrictTypes=e.restrictTypes||[];
+    a.restrictTerrs=e.restrictTerrs||[];a.restrictRoutes=e.restrictRoutes||[];a.caps=e.caps||{};
+    return true;});
+  if(kicked){
+    ST.cur=ST.accounts[0]?.id||null;ST.pinOk=ST.cur?ST.pinOk:false;save();
+    // принудительно выкинуть с рабочих экранов
+    VISIT=null;closeM();
+    setTimeout(()=>{toast('Аккаунт «'+kickName+'» отключён администратором');render();},50);
+  } else save();
+}
+function logoutKicked(){ST.cur=null;ST.pinOk=false;save();render();}
+async function txLoadMine(){
+  if(!me())return;
+  const r=await fetch(SB_URL+'/rest/v1/crm_tx?select=*&employee=eq.'+encodeURIComponent(me().id)+'&order=created_at.desc&limit=500',{headers:H()});
+  if(r.ok){const cloud=await r.json();
+    const cloudIds=new Set(cloud.map(t=>t.id));
+    const localOnly=MYTX.filter(t=>!cloudIds.has(t.id));
+    MYTX=[...localOnly,...cloud];
+    // убираем операции по заказам, удалённым в админке (синхронизация удаления)
+    const del=new Set(DATA._deleted||[]);
+    if(del.size)MYTX=MYTX.filter(t=>!(t.type==='order'&&del.has(t.id)));
+    localStorage.setItem('halwaa_mob_tx',JSON.stringify(MYTX));}
+}
+async function txSend(type,payload){
+  const rec={id:payload.id||uid(type[0]),type,employee:me()?me().id:'',payload,created_at:new Date().toISOString()};
+  MYTX.unshift(rec);                                  // сразу видно в счётчиках/истории
+  try{localStorage.setItem('halwaa_mob_tx',JSON.stringify(MYTX));}catch(e){}
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/crm_tx?on_conflict=id',{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify([rec])});
+    if(!r.ok)throw 0;
+  }catch(e){ // не дошло до облака — в очередь на отправку (из MYTX не убираем, чтобы видеть)
+    if(!ST.outbox.some(x=>x.id===rec.id)){ST.outbox.push(rec);save();}
+  }
+}
+async function flushOutbox(){
+  if(!ST.outbox.length)return;
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/crm_tx?on_conflict=id',{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(ST.outbox)});
+    if(r.ok){ST.outbox=[];save();}  // операции уже в MYTX (добавлены при txSend), просто очищаем очередь отправки
+  }catch(e){}
+}
+
+/* справочники-хелперы */
+const L=k=>DATA[k]||[];
+const cli=id=>L('clients').find(c=>c.id===id);
+const prod=id=>L('products').find(p=>p.id===id);
+const cat=id=>L('categories').find(c=>c.id===id);
+const route=id=>L('routes').find(r=>r.id===id);
+const terr=id=>L('territories').find(t=>t.id===id);
+const RULES=()=>DATA.rules||{};
+const excl=(rk)=>{const r=RULES()[rk];return r&&Array.isArray(r.exceptions)&&me()&&r.exceptions.includes(me().id);};
+const ruleOn=(rk)=>{const r=RULES()[rk];return r?(r.enabled&&!excl(rk)):false;};
+const allowedProd=p=>{const m=me();if(!m)return true;
+  if((m.restrictCats||[]).includes(p.cat))return false;
+  if((m.restrictProducts||[]).includes(p.id))return false;return true;};
+const allowedClient=c=>{const m=me();if(!m)return true;
+  if((m.restrictTypes||[]).includes(c.type))return false;
+  if((m.restrictTerrs||[]).includes(c.terr))return false;
+  if((m.restrictRoutes||[]).includes(c.route))return false;return true;};
+function myClients(){const m=me();if(!m)return [];
+  return L('clients').filter(c=>c.active!==false&&allowedClient(c)&&
+    (!m.terr||c.terr===m.terr||c.agent===m.id));}  // своя территория или закреплён за этим сотрудником
+
+/* мои визиты/заказы (облако+исходящие) */
+function myVisits(d){return [...ST.outbox,...MYTX].filter(t=>t.type==='visit'&&(!d||(t.payload.date===d)));}
+function myOrders(d){return [...ST.outbox,...MYTX].filter(t=>t.type==='order'&&(!d||(t.payload.date===d)));}
+function visitedToday(cid){return myVisits(today()).some(t=>t.payload.client===cid);}
+function visitOf(cid){return myVisits(today()).find(t=>t.payload.client===cid);}
+
+/* ---------- модалки ---------- */
+function openM(html){$('#mbody').innerHTML=html;$('#mbg').classList.add('open');
+  try{history.pushState({m:1},'');}catch(e){}}
+function closeM(){$('#mbg').classList.remove('open');}
+// аппаратная кнопка «Назад»: сначала закрыть открытое окно (не теряя черновик), потом вернуться по экранам
+window.addEventListener('popstate',()=>{
+  if($('#mbg').classList.contains('open')){closeM();return;}
+  if(NAVH.length){VIEW=NAVH.pop();render();try{history.pushState({},'');}catch(e){}}
+});
+
+/* ---------- геолокация ---------- */
+let TRACK=[];
+let GEO_DENIED=false,GEO_WATCH=null,GEO_BYPASS=false,GPS_HIDE=false;
+function geoStart(){
+  if(!navigator.geolocation){GEO_DENIED=false;return;}  // нет API геолокации — работаем без неё
+  try{TRACK=JSON.parse(localStorage.getItem('halwaa_track_'+today())||'[]');}catch(e){TRACK=[];}
+  // проверяем статус разрешения заранее (где поддерживается)
+  if(navigator.permissions&&navigator.permissions.query){
+    navigator.permissions.query({name:'geolocation'}).then(st=>{
+      if(st.state==='denied'&&!GEO_BYPASS){GEO_DENIED=true;if(me())render();}
+      st.onchange=()=>{if(st.state==='granted'){GEO_DENIED=false;geoStart();if(me())render();}
+        else if(st.state==='denied'&&!GEO_BYPASS){GEO_DENIED=true;if(me())render();}};
+    }).catch(()=>{});
+  }
+  const rec=p=>{GEO=[p.coords.latitude,p.coords.longitude];if(GEO_DENIED){GEO_DENIED=false;if(me())render();}
+    const last=TRACK[TRACK.length-1];const t=new Date().toISOString();
+    if(!last||distKm([last.lat,last.lng],GEO)>0.04||(Date.parse(t)-Date.parse(last.t))>180000){
+      TRACK.push({lat:GEO[0],lng:GEO[1],t,spd:p.coords.speed||0,acc:p.coords.accuracy||0});
+      if(TRACK.length>400)TRACK=TRACK.slice(-400);
+      try{localStorage.setItem('halwaa_track_'+today(),JSON.stringify(TRACK));}catch(e){}
+    }};
+  const err=e=>{if(e&&e.code===1&&!GEO_BYPASS){GEO_DENIED=true;if(me())render();}};
+  navigator.geolocation.getCurrentPosition(rec,err,{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+  try{if(GEO_WATCH)navigator.geolocation.clearWatch(GEO_WATCH);
+    GEO_WATCH=navigator.geolocation.watchPosition(rec,err,{enableHighAccuracy:true,timeout:20000,maximumAge:10000});}catch(e){}
+  if(!window._trkIv)window._trkIv=setInterval(()=>{if(me()&&TRACK.length)sendTrack();},300000);
+}
+function geoBlockScreen(){
+  $('#app').innerHTML=`<div class="center"><div class="logo">H</div>
+    <h2 style="text-align:center;color:var(--navy);margin-bottom:8px">Нужен доступ к геолокации</h2>
+    <div class="card"><div class="hint" style="line-height:1.7;margin-bottom:14px">
+      Для работы приложения требуется <b>постоянный доступ к местоположению</b>. Это нужно для отметки визитов, контроля маршрута и рабочего времени.<br><br>
+      Откройте <b>Настройки телефона → Приложения → HALWAA → Разрешения → Местоположение</b> и выберите <b>«Разрешить всегда»</b>.</div>
+    <button class="btn primary" id="geo_btn" onclick="retryGeo()">Я разрешил — продолжить</button>
+    <div class="hint" id="geo_st" style="text-align:center;margin-top:10px"></div></div></div>`;
+}
+function retryGeo(){
+  GEO_BYPASS=true;GEO_DENIED=false;
+  try{navigator.geolocation.getCurrentPosition(
+    p=>{GEO=[p.coords.latitude,p.coords.longitude];render();},
+    ()=>{toast('Геолокация всё ещё выключена. Откройте настройки телефона.');},
+    {enableHighAccuracy:true,timeout:8000,maximumAge:60000});}catch(e){}
+  try{geoStart();}catch(e){}
+  render();
+}
+function sendTrack(){
+  if(!me()||!TRACK.length)return;
+  const p={id:'trk_'+me().id+'_'+today(),agent:me().id,date:today(),points:TRACK,
+    firstAt:TRACK[0]?.t,lastAt:TRACK[TRACK.length-1]?.t,count:TRACK.length};
+  // трек отправляем как отдельный tx-тип (merge по id — обновляется за день)
+  fetch(SB_URL+'/rest/v1/crm_tx?on_conflict=id',{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},
+    body:JSON.stringify([{id:p.id,type:'track',employee:me().id,payload:p,created_at:new Date().toISOString()}])}).catch(()=>{});
+}
+/* ПИНГ ПРИСУТСТВИЯ: «я в сети» — отправляется при входе и каждую минуту, merge по id сотрудника */
+function sendPresence(){
+  if(!me()||!sbOk())return;
+  const now=new Date().toISOString();
+  const loc=GEO?{lat:GEO[0],lng:GEO[1]}:{};
+  fetch(SB_URL+'/rest/v1/crm_tx?on_conflict=id',{method:'POST',headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},
+    body:JSON.stringify([{id:'presence_'+me().id,type:'presence',employee:me().id,payload:{agent:me().id,at:now,name:me().name,...loc},created_at:now}])}).catch(()=>{});
+}
+function distKm(a,b){if(!a||!b)return null;const R=6371,dl=(b[0]-a[0])*Math.PI/180,dg=(b[1]-a[1])*Math.PI/180;
+  const x=Math.sin(dl/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dg/2)**2;
+  return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
+
+/* ============================================================
+   ЭКРАНЫ
+============================================================ */
+/* ===== ОБЯЗАТЕЛЬНЫЕ РАЗРЕШЕНИЯ: уведомления + локация ===== */
+let NOTIF_OK=false,LOC_OK=false;
+function permExempt(){ // исключение из Настройки→Правила (по сотруднику)
+  try{const ex=(DATA.rules&&DATA.rules.permExempt)||[];return GEO_BYPASS||ex.includes(me()&&me().id);}catch(e){return GEO_BYPASS;}}
+function permsReady(){
+  const notif=(typeof Notification==='undefined')||Notification.permission==='granted';
+  const loc=LOC_OK||!!GEO||(typeof navigator==='undefined'||!navigator.geolocation);
+  NOTIF_OK=notif;LOC_OK=loc;
+  return (notif&&loc)||permExempt();
+}
+/* ===== ФОНОВЫЕ PUSH (Service Worker + Web Push) ===== */
+const VAPID_PUBLIC="BDk7OsRQnYiFKWRzlALa6NQ_-iDwYE8F50Hzcq6s2unelAvVWRTS7e1jkaBvbLueC0Gn8aLaZm7MljaXQOtDqV8";
+let SW_REG=null;
+function b64ToUint8(b){const pad='='.repeat((4-b.length%4)%4);const s=(b+pad).replace(/-/g,'+').replace(/_/g,'/');const r=atob(s);return Uint8Array.from([...r].map(c=>c.charCodeAt(0)));}
+async function initPush(){
+  if(!('serviceWorker'in navigator)||!('PushManager'in window))return;
+  try{
+    SW_REG=await navigator.serviceWorker.register('/sw.js');
+    if(typeof Notification==='undefined'||Notification.permission!=='granted')return;
+    let sub=await SW_REG.pushManager.getSubscription();
+    if(!sub){sub=await SW_REG.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToUint8(VAPID_PUBLIC)});}
+    await savePushSub(sub);
+  }catch(e){/* push не критичен */}
+}
+async function savePushSub(sub){
+  if(!me()||!sbOk())return;
+  const j=sub.toJSON();
+  // сохраняем подписку в Supabase (таблица push_subs) — сервер будет слать сюда
+  try{await fetch(SB_URL+'/rest/v1/push_subs?on_conflict=endpoint',{method:'POST',
+    headers:{...H(),'Prefer':'resolution=merge-duplicates,return=minimal'},
+    body:JSON.stringify([{endpoint:j.endpoint,agent:me().id,name:me().name,p256dh:j.keys.p256dh,auth:j.keys.auth,updated_at:new Date().toISOString()}])});}catch(e){}
+}
+
+function requestAllPerms(){
+  // 1) уведомления
+  const askLoc=()=>{
+    if(navigator.geolocation){navigator.geolocation.getCurrentPosition(
+      p=>{GEO=[p.coords.latitude,p.coords.longitude];LOC_OK=true;GEO_DENIED=false;geoStart();render();},
+      e=>{LOC_OK=false;render();},{enableHighAccuracy:true,timeout:15000});}
+    else{LOC_OK=true;render();}
+  };
+  if(typeof Notification!=='undefined'&&Notification.permission!=='granted'){
+    Notification.requestPermission().then(()=>{NOTIF_OK=Notification.permission==='granted';if(NOTIF_OK)initPush();askLoc();}).catch(askLoc);
+  }else{NOTIF_OK=true;initPush();askLoc();}
+}
+function permGate(){
+  const m=me();
+  const notifBad=typeof Notification!=='undefined'&&Notification.permission!=='granted';
+  const locBad=!GEO&&!LOC_OK;
+  $('#app').innerHTML=`<div class="center" style="padding:24px">
+    <div class="logo">H</div>
+    <h3 style="text-align:center;margin:8px 0 6px;color:var(--navy)">Нужны разрешения</h3>
+    <p class="hint" style="text-align:center;margin-bottom:20px;line-height:1.6">Для работы приложения HALWAA нужно разрешить <b>уведомления</b> и <b>геолокацию</b>. Без них приложение не работает.</p>
+    <div class="card" style="margin-bottom:10px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:26px">${notifBad?'🔴':'🟢'}</div>
+      <div style="flex:1"><b>Уведомления</b><div class="hint">${notifBad?'не разрешено — напоминания о работе и продажах':'разрешено ✓'}</div></div>
+    </div>
+    <div class="card" style="margin-bottom:18px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:26px">${locBad?'🔴':'🟢'}</div>
+      <div style="flex:1"><b>Геолокация</b><div class="hint">${locBad?'не разрешено — отметка визитов и километраж':'разрешено ✓'}</div></div>
+    </div>
+    <button class="btn primary" style="width:100%;font-size:16px;padding:15px" onclick="requestAllPerms()">Разрешить всё</button>
+    <p class="hint" style="text-align:center;margin-top:14px;line-height:1.6">Если кнопка не помогает — откройте настройки телефона → разрешения для этого сайта/приложения и включите «Уведомления» и «Местоположение», затем вернитесь.</p>
+    <button class="btn ghost" style="width:100%;margin-top:10px" onclick="render()">🔄 Проверить снова</button>
+  </div>`;
+}
+
+function render(){
+  if(!sbOk()){$('#app').innerHTML=`<div class="center"><div class="logo">H</div>
+    <div class="card"><b>Облако не настроено</b><div class="hint" style="margin-top:8px;line-height:1.7">Откройте файл mobile.html и вставьте SB_URL и SB_KEY (из Supabase → Settings → API), затем разверните на Vercel.</div></div></div>`;return;}
+  if(ST.pin&&!ST.pinOk){pinScreen('enter');return;}
+  if(!me()){loginScreen();return;}
+  // ОБЯЗАТЕЛЬНЫЕ РАЗРЕШЕНИЯ: без уведомлений и локации приложение не работает (кроме исключений)
+  if(!permsReady()){permGate();return;}
+  $('#app').innerHTML=topbar()+`<div class="wrap" id="page"></div>`+navbar();
+  ({dash:vDash,routes:vRoutes,clients:vClients,catalog:vCatalog,more:vMore,history:vHistory,kpi:vKpi,ships:vShips,map:vMap,orders:vOrders,cprofile:vCprofile,caddform:vCaddform,locpick:vLocpick,price:vPrice,learn:vLearn,notif:vNotif,tools:vTools}[VIEW]||vDash)();
+}
+function go(v){NAVH.push(VIEW);VIEW=v;render();window.scrollTo(0,0);}
+function topbar(){const m=me();const ini=(m.name||'?').trim()[0]||'?';
+  const titles={dash:'HALWAA',routes:'Маршрут',clients:'Клиенты',catalog:'Каталог',more:'Ещё',orders:'Текущие заказы',ships:'Отгрузки',kpi:'KPI',history:'История',map:'Карта',cprofile:'Профиль клиента',caddform:'Информация о клиенте',locpick:'Выбор локации',price:'Прайс лист',learn:'Видео о товарах',notif:'Уведомления',tools:'Инструменты'};
+  const isSup=m.role==='supervisor'||m.role==='manager';
+  const unread=isSup?(DATA.notifications||[]).filter(n=>n.to===m.id&&!n.read).length:0;
+  return `<div class="top"><b>${titles[VIEW]||'HALWAA'}</b>
+    <div class="tools">
+      ${isSup?`<div style="position:relative" onclick="go('notif')"><svg class="ic" viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>${unread?`<span style="position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:17px;height:17px;border-radius:99px;display:grid;place-items:center;padding:0 4px">${unread}</span>`:''}</div>`:''}
+      <svg class="ic" viewBox="0 0 24 24" onclick="go('clients')"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <div class="ava" onclick="accMenu()" ${m.photo?`style="background-image:url('${m.photo}')"`:''}>${m.photo?'':esc(ini)}</div>
+    </div></div>`;}
+function navbar(){
+  const ic={dash:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>',
+   routes:'<svg viewBox="0 0 24 24"><path d="M13 5l3 3-3 3"/><path d="M16 8H8a3 3 0 00-3 3v0a3 3 0 003 3h6a3 3 0 013 3v0a3 3 0 01-3 3H6"/></svg>',
+   clients:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3 2.9-4.8 6-4.8s5.4 1.8 6 4.8"/><circle cx="17.5" cy="9.5" r="2.4"/><path d="M16 14.4c2.6.2 4.4 1.7 5 4.2"/></svg>'};
+  return `<div class="nav">${[['dash','Главная','dash'],['routes','Маршрут','routes'],['clients','Клиенты','clients']].map(([v,label,k])=>{
+    const on=(v==='dash'&&['dash','catalog','orders','ships','kpi','history','map','more'].includes(VIEW))||VIEW===v;
+    return `<button class="${on?'on':''}" onclick="go('${v}')"><span class="navic">${ic[k]}</span>${label}</button>`;}).join('')}</div>`;}
+
+/* ---------- ВХОД / PIN / АККАУНТЫ ---------- */
+function loginScreen(){
+  $('#app').innerHTML=`<div class="center"><div class="logo">H</div>
+    <h2 style="text-align:center;color:var(--green);margin-bottom:4px">HALWAA BARAKA</h2>
+    <div class="hint" style="text-align:center;margin-bottom:20px">${T('login')}</div>
+    <div class="card">
+      <div class="field"><label>Login</label><input id="lg_l" autocomplete="username"></div>
+      <div class="field"><label>Parol / Пароль</label><input id="lg_p" type="password" autocomplete="current-password"></div>
+      <button class="btn primary" onclick="doLogin()">${T('loginB')}</button>
+      <button class="btn ghost" style="margin-top:8px" onclick="checkConn()">Проверить связь с облаком</button>
+      <div class="hint" id="conn_st" style="margin-top:10px;text-align:center"></div>
+      <div class="hint" style="margin-top:12px;text-align:center;line-height:1.6;border-top:1px solid var(--line);padding-top:12px">Для проверки приложения: логин <b>demo</b>, пароль <b>demo</b></div>
+    </div>
+    <div class="seg" style="max-width:220px;margin:8px auto 0">
+      <button class="${ST.lang==='ru'?'on':''}" onclick="ST.lang='ru';save();render()">Русский</button>
+      <button class="${ST.lang==='uz'?'on':''}" onclick="ST.lang='uz';save();render()">O‘zbekcha</button>
+    </div></div>`;
+}
+async function checkConn(){
+  const st=$('#conn_st');if(st){st.textContent='Проверяю…';st.style.color='';}
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/crm_kv?select=key&key=eq.employees',{headers:H()});
+    if(!r.ok){if(st){st.textContent='❌ Ошибка '+r.status+'. Выполните supabase.sql в проекте.';st.style.color='var(--red)';}return;}
+    await kvLoad();const emps=L('employees');
+    if(st){
+      if(!emps.length){st.textContent='⚠ Связь есть, но сотрудников нет. В админке нажмите «Выгрузить в облако».';st.style.color='var(--amber)';}
+      else{st.innerHTML='✅ Связь есть. Сотрудников: '+emps.length+'<br>Логины: '+emps.filter(e=>e.active!==false).map(e=>e.login).join(', ');st.style.color='var(--green)';}
+    }
+  }catch(e){if(st){st.textContent='❌ Нет связи: '+e.message;st.style.color='var(--red)';}}
+}
+async function doLogin(){
+  const l=$('#lg_l').value.trim().toLowerCase(),p=$('#lg_p').value.trim();
+  if(!l||!p){toast('Введите логин и пароль');return;}
+  // РЕЗЕРВНЫЙ демо-вход (всегда работает, чтобы проверить приложение)
+  if(l==='demo'&&p==='demo'){
+    const demo={id:'demo',name:'Демо агент',role:'agent',login:'demo',password:'demo',terr:'',caps:{order:true,ret:true,delivery:true},
+      restrictCats:[],restrictProducts:[],restrictTypes:[],restrictTerrs:[],restrictRoutes:[],plan:25};
+    if(!ST.accounts.some(a=>a.id==='demo'))ST.accounts.push(demo);
+    ST.cur='demo';save();try{await kvLoad();}catch(e){}try{await txLoadMine();}catch(e){}
+    toast('Демо-режим');VIEW='dash';render();return;
+  }
+  let emps=null,online=false;
+  try{await kvLoad();emps=L('employees');online=true;}
+  catch(e){
+    // нет связи — пробуем локальный кэш (вход в офлайне)
+    try{const cached=JSON.parse(localStorage.getItem('halwaa_mob_data')||'{}');emps=cached.employees||[];}catch(_){emps=[];}
+  }
+  if(!emps||!emps.length){
+    if(online)toast('❌ В облаке нет сотрудников. В админке откройте Настройки → Интеграции → «Выгрузить в облако».');
+    else toast('❌ Нет связи и нет сохранённых данных. Подключите интернет.');
+    return;
+  }
+  const byLogin=emps.find(e=>String(e.login||'').trim().toLowerCase()===l);
+  if(!byLogin){toast('❌ Логин «'+l+'» не найден. Нажмите «Проверить связь» — покажу все логины.');return;}
+  if(byLogin.active===false){toast('❌ Аккаунт отключён администратором.');return;}
+  if(String(byLogin.password||'').trim()!==p){toast('❌ Неверный пароль для «'+l+'».');return;}
+  const emp=byLogin;
+  if(!ST.accounts.some(a=>a.id===emp.id))ST.accounts.push({id:emp.id,name:emp.name,role:emp.role,login:emp.login,password:emp.password,photo:emp.photo||'',
+    restrictCats:emp.restrictCats||[],restrictProducts:emp.restrictProducts||[],restrictTypes:emp.restrictTypes||[],
+    restrictTerrs:emp.restrictTerrs||[],restrictRoutes:emp.restrictRoutes||[],terr:emp.terr||'',plan:emp.plan||25,caps:emp.caps||{}});
+  else Object.assign(ST.accounts.find(a=>a.id===emp.id),{name:emp.name,role:emp.role,password:emp.password,terr:emp.terr||'',caps:emp.caps||{}});
+  ST.cur=emp.id;save();
+  try{await txLoadMine();}catch(e){}
+  sendPresence();
+  if(ST.pin){VIEW='dash';render();}
+  else if(ST.pinAsked){VIEW='dash';render();}
+  else pinOffer();
+}
+function pinOffer(){
+  $('#app').innerHTML=`<div class="center"><div class="logo">H</div>
+    <h3 style="text-align:center;color:var(--green);margin-bottom:6px">${T('pinProtect')}</h3>
+    <p class="hint" style="text-align:center;margin-bottom:22px">${T('pinProtectH')}</p>
+    <button class="btn primary" style="max-width:300px;margin:0 auto 10px" onclick="PINBUF='';pinScreen('set')">${T('setPin')}</button>
+    <button class="btn ghost" style="max-width:300px;margin:0 auto" onclick="ST.pinAsked=true;save();VIEW='dash';render()">${T('skip')}</button></div>`;
+}
+let PINBUF='',PINTMP='';
+function pinScreen(mode){
+  const title=mode==='enter'?'Введите пин-код':mode==='set'?'Придумайте пин-код':'Повторите пин-код';
+  $('#app').innerHTML=`<div style="min-height:100vh;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative">
+    <h2 style="text-align:center;color:var(--navy);font-size:24px;font-weight:700;margin-bottom:36px">${title}</h2>
+    <div style="display:flex;gap:18px;justify-content:center;margin-bottom:56px">${[0,1,2,3].map(i=>`<i style="width:15px;height:15px;border-radius:50%;background:${PINBUF.length>i?'var(--navy)':'#CDD4DE'};display:block"></i>`).join('')}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,84px);gap:20px;justify-items:center">
+      ${[1,2,3,4,5,6,7,8,9].map(d=>`<button onclick="pinKey('${d}','${mode}')" style="width:78px;height:78px;border:none;background:none;font-size:30px;font-weight:400;color:var(--navy);border-radius:50%">${d}</button>`).join('')}
+      <span style="width:78px;height:78px;display:grid;place-items:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C2536" stroke-width="1.4"><path d="M12 11c0-2 1.5-3.5 3.5-3.5M12 11v4M8 7.5C9 6.5 10.4 6 12 6c3 0 5 2 5 5M6.5 12c0-1 .3-2 .8-2.8M9 17c-.5-.8-.8-1.8-.8-3M12 11c0 4 .5 6 2 8M15 19c-1-1.5-1.5-3.5-1.5-6"/></svg></span>
+      <button onclick="pinKey('0','${mode}')" style="width:78px;height:78px;border:none;background:none;font-size:30px;font-weight:400;color:var(--navy);border-radius:50%">0</button>
+      <button onclick="pinKey('⌫','${mode}')" style="width:78px;height:78px;border:none;background:none;border-radius:50%;display:grid;place-items:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1C2536" stroke-width="1.6"><path d="M21 5H8l-5 7 5 7h13a2 2 0 002-2V7a2 2 0 00-2-2z"/><path d="M14 9l-4 6M10 9l4 6"/></svg></button>
+    </div>
+    <div style="position:absolute;bottom:28px;left:0;right:0;text-align:center;font-size:15px">
+      ${mode==='enter'?`<span style="color:#A8B0BD">Забыли пин-код? </span><b style="color:var(--navy)" onclick="pinForgot()">Войдите заново</b>`
+        :`<b style="color:var(--navy)" onclick="pinBack('${mode}')">${mode==='set'?'Пропустить':'← Назад'}</b>`}
+    </div>
+  </div>`;
+}
+function pinBack(mode){PINBUF='';if(mode==='set'){ST.pinAsked=true;save();VIEW='dash';render();}else{pinScreen('set');}}
+function pinKey(d,mode){
+  if(d==='⌫'){PINBUF=PINBUF.slice(0,-1);pinScreen(mode);return;}
+  if(PINBUF.length>=4)return;PINBUF+=d;
+  if(PINBUF.length===4){
+    if(mode==='set'){PINTMP=PINBUF;PINBUF='';pinScreen('rep');return;}
+    if(mode==='rep'){if(PINBUF===PINTMP){ST.pin=PINBUF;ST.pinOk=true;ST.pinAsked=true;PINBUF='';save();VIEW='dash';render();}else{toast(T('wrongPin'));PINBUF='';pinScreen('set');}return;}
+    if(mode==='enter'){if(PINBUF===ST.pin){ST.pinOk=true;PINBUF='';render();}else{toast(T('wrongPin'));PINBUF='';pinScreen('enter');}return;}
+  }
+  pinScreen(mode);
+}
+function pinForgot(){if(!confirm('Сбросить PIN и выйти?'))return;ST.pin=null;ST.pinOk=false;ST.pinAsked=false;ST.cur=null;PINBUF='';save();render();}
+function accMenu(){const m=me();
+  openM(`<h2>${T('profile')}</h2>
+    <div class="card"><div class="row" style="border:none;padding:4px 0">
+      <div style="display:flex;align-items:center;gap:12px"><div class="ava" style="width:46px;height:46px" ${m.photo?`style="width:46px;height:46px;background-image:url('${m.photo}')"`:''}>${m.photo?'':esc(m.name[0])}</div>
+      <div><b>${esc(m.name)}</b><div class="hint">${esc(m.login)} · ${esc(m.role)}</div></div></div></div></div>
+    <div class="card">
+      <div class="row" onclick="closeM();go('kpi')"><b>${T('kpi')}</b><span>›</span></div>
+      <div class="row" onclick="closeM();go('history')"><b>${T('history')}</b><span>›</span></div>
+      <div class="row" onclick="syncAll(true)"><b>${T('sync')}</b><span>⟳</span></div>
+    </div>
+    <div class="card">
+      <div class="row"><b>${T('lang')}</b><div class="seg" style="margin:0;width:170px">
+        <button class="${ST.lang==='ru'?'on':''}" onclick="ST.lang='ru';save();closeM();render()">RU</button>
+        <button class="${ST.lang==='uz'?'on':''}" onclick="ST.lang='uz';save();closeM();render()">UZ</button></div></div>
+      <div class="row" onclick="PINBUF='';closeM();pinScreen('set')"><b>${T('changePin')}</b><span>›</span></div>
+    </div>
+    <div class="card"><b style="font-size:13px">${T('accounts')}</b>
+      ${ST.accounts.map(a=>`<div class="row"><span>${a.id===ST.cur?'✓ ':''}${esc(a.name)} <span class="hint">${esc(a.login)}</span></span>
+        ${a.id!==ST.cur?`<button class="btn sm ghost" onclick="ST.cur='${a.id}';save();closeM();syncAll();render()">→</button>`:''}</div>`).join('')}
+      <button class="btn ghost" style="margin-top:10px" onclick="closeM();ST.pinOk=true;loginScreen()">${T('addAcc')}</button>
+      <button class="btn danger" style="margin-top:8px" onclick="logout()">${T('logout')}</button></div>`);
+}
+function logout(){ST.accounts=ST.accounts.filter(a=>a.id!==ST.cur);ST.cur=ST.accounts[0]?.id||null;if(!ST.accounts.length){ST.pin=null;ST.pinOk=false;}save();closeM();render();}
+
+/* ---------- ДАШБОРД ---------- */
+function planToday(){
+  const m=me();if(!m)return 0;
+  const dow=(new Date(today()+'T12:00').getDay()+6)%7+1; // 1=Пн..7=Вс
+  const todayRoutes=new Set(L('routes').filter(r=>r.dow===dow&&(!m.terr||r.terr===m.terr)&&!((m.restrictRoutes||[]).includes(r.id))).map(r=>r.id));
+  // клиенты этого сотрудника на сегодняшних маршрутах
+  return myClients().filter(c=>todayRoutes.has(c.route)).length;
+}
+/* ===== ПЕРСОНАЛЬНЫЕ ПРИВЕТСТВИЯ (18 вариантов, ротация) ===== */
+function firstName(full){return (full||'Коллега').trim().split(/\s+/)[0];}
+function greetMsg(full){
+  const n=firstName(full);
+  const h=new Date().getHours();
+  const tod=h<6?'Доброй ночи':h<12?'Доброе утро':h<17?'Добрый день':'Добрый вечер';
+  const G=[
+    `${tod}, ${n}! 👋`,
+    `Приветствую, ${n}! Хороших продаж сегодня! 💪`,
+    `${n}, рады видеть тебя! Удачного дня! ☀️`,
+    `Привет, ${n}! Пусть сегодня будет много заказов! 📈`,
+    `${n}, в добрый путь по маршруту! 🚗`,
+    `Здравствуй, ${n}! Сегодня твой день! 🌟`,
+    `${n}, вперёд к новым продажам! 🔥`,
+    `Доброго дня, ${n}! Желаем больших чеков! 💰`,
+    `Привет, ${n}! Каждый визит — шаг к успеху! 👍`,
+    `${n}, ты лучший! Покажи отличный результат! 🏆`,
+    `Приветствую, ${n}! Пусть клиенты будут довольны! 😊`,
+    `${n}, отличного настроения и хороших сделок! 🤝`,
+    `Здравствуй, ${n}! План на сегодня — выполним его вместе! ✅`,
+    `${n}, с улыбкой — к каждому магазину! 😃`,
+    `Привет, ${n}! Свежие трубочки ждут своих покупателей! 🍪`,
+    `${n}, удачи на маршруте! Мы верим в тебя! 💚`,
+    `Доброе утро, ${n}! Кофе выпил — и за работу! ☕`,
+    `${n}, продуктивного дня и больших продаж HALWAA! 🎯`,
+  ];
+  // ротация по дню — каждый день новое приветствие
+  const day=parseInt((today()||'').replace(/-/g,''))||0;
+  return G[day%G.length];
+}
+function greetSub(){
+  const subs=['Хорошего дня и больших продаж!','Не забудь про фото витрины в точках.','Пей воду и держи темп!','Каждый клиент важен.','Выполни план — получи бонус!','Сегодня отличный день для работы.'];
+  const day=parseInt((today()||'').replace(/-/g,''))||0;
+  return subs[(day+3)%subs.length];
+}
+function vDash(){
+  const t=today(),y=addDays(t,-1);
+  const vis=myVisits(t).length;
+  const plan=planToday();
+  const pct=plan>0?Math.min(100,Math.round(vis/plan*100)):0;
+  const ords=myOrders(t);const sum=ords.reduce((s,o)=>s+(o.payload.total||0),0);
+  const akb=new Set(ords.map(o=>o.payload.client)).size;
+  const deliv=canDeliver();
+  const m=me();const role=m.role;
+  const isSup=role==='supervisor'||role==='manager';
+  const T_orders=['orders','<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>','Текущие заказы'];
+  const T_catalog=['catalog','<svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>','Каталог'];
+  const T_ships=['ships','<svg viewBox="0 0 24 24"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 9h4l3 3v5h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>',deliv?'Доставка':'Отгрузки'];
+  const T_kpi=['kpi','<svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>','KPI'];
+  const T_price=['price','<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2"/></svg>','Прайс лист'];
+  const T_learn=['learn','<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M10 9l5 3-5 3z" fill="var(--navy)"/></svg>','Видео'];
+  const T_tools=['tools','<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="6.5" r="3.5"/><path d="M4 14l3 3 3-3M5.5 14v6M14 14h6v6h-6z"/></svg>','Инструменты'];
+  const T_map=['map','<svg viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>','Карта'];
+  const T_notif=['notif','<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>','Уведомления'];
+  const T_more=['more','<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>','Ещё'];
+  let tiles;
+  if(role==='courier'||role==='expediter'){
+    tiles=[T_ships,T_orders,T_map,T_catalog,T_price,T_tools,T_more];
+  }else if(isSup){
+    tiles=[T_notif,T_kpi,T_map,T_orders,T_ships,T_catalog,T_price,T_tools,T_more];
+  }else{
+    tiles=[T_orders,T_catalog,T_ships,T_kpi,T_price,T_learn,T_map,T_tools,T_more];
+  }
+  $('#page').innerHTML=`
+  <div class="card" style="background:linear-gradient(120deg,#1F4D3A,#2E6B50);color:#fff;margin-bottom:12px;padding:16px 18px">
+    <div style="font-size:17px;font-weight:800">${greetMsg(me().name)}</div>
+    <div style="font-size:12.5px;opacity:.85;margin-top:3px">${greetSub()}</div>
+  </div>
+  ${GEO_DENIED&&!GPS_HIDE?`<div class="card" style="background:#FFF6E5;border:1px solid #F0D38A;display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B5841A" stroke-width="1.8" style="flex:0 0 auto;margin-top:2px"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    <div style="flex:1;font-size:13px;line-height:1.5;color:#8A6A1A">Геолокация выключена. Включите её в настройках телефона — иначе визиты и маршрут не засчитываются и возможны штрафы.
+      <div style="margin-top:6px"><b onclick="retryGeo()" style="color:#B5841A">Включить</b> · <b onclick="GPS_HIDE=true;render()" style="color:#9AA0AA">Скрыть</b></div></div>
+  </div>`:''}
+  <div class="tiles">${tiles.map(([v,ic,label])=>`<div class="tile" onclick="go('${v}')">${ic}<span>${label}</span></div>`).join('')}</div>
+  <div class="summary">
+    <h4>Заказы <span style="color:#8696B5">${t.split('-').reverse().join('.')}</span></h4>
+    <div class="sr"><span>Выполненные визиты</span><b>${vis}/${plan}</b></div>
+    <div class="sr"><span>Визиты по плану</span><div class="sbar"><i style="width:${pct}%"></i></div><b>${pct}%</b></div>
+    <div class="sr"><span>Кол-во заказов</span><b>${ords.length}</b></div>
+    <div class="sr"><span>АКБ</span><b>${akb}</b></div>
+    <div class="sr" style="border-top:1px solid rgba(255,255,255,.1);padding-top:13px"><span>Сумма заказов</span><b>${money(sum)}</b></div>
+  </div>
+  ${plan===0?`<div class="card"><div class="hint">На сегодня нет клиентов на вашем маршруте. Откройте «Маршрут» или обратитесь к администратору.</div></div>`:''}
+  ${VISIT?visitCard():''}
+  ${ST.outbox.length?`<div class="card" style="border-color:var(--amber)"><b>⏳ Ожидают отправки: ${ST.outbox.length}</b>
+    <button class="btn gold" style="margin-top:10px" onclick="flushOutbox().then(()=>render())">Отправить</button></div>`:''}`;
+}
+
+/* ---------- активный визит (карточка+секундомер) ---------- */
+function canDeliver(){const m=me();if(!m)return false;
+  // доступ к доставке: роль курьер/экспедитор, или явное разрешение в правах сотрудника
+  return !!(m.caps&&m.caps.delivery)||m.role==='courier'||m.role==='expediter'||m.role==='manager';}
+function clientDeposit(cid){const c=cli(cid);return c&&c.debt<0?-c.debt:0;} // депозит = отрицательный долг
+function pendingDelivery(cid){ // заказы этому клиенту на доставке (отгружены, не закрыты)
+  return (DATA.orders||[]).filter(o=>o.client===cid&&o.status==='shipped');}
+function visitCard(){
+  const c=cli(VISIT.client);
+  const dep=clientDeposit(VISIT.client);
+  const deliv=canDeliver();
+  const pend=pendingDelivery(VISIT.client);
+  return `<div class="card" style="border-color:var(--gold)">
+    <div class="row" style="border:none;padding:0 0 8px"><b>⏱ ${esc(c?.name||'')}</b><span class="timer" id="vt">00:00</span></div>
+    ${c&&c.debt>0?`<div class="pill red" style="margin-bottom:8px">Долг: ${money(c.debt)}</div>`:''}
+    ${dep>0?`<div class="pill green" style="margin-bottom:8px">Депозит: ${money(dep)}</div>`:''}
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      ${!VISIT.photo&&ruleOn('taskSequence')?`<label class="btn sm gold" style="flex:1 1 100%">${T('photo')} *<input type="file" accept="image/*" capture="environment" style="display:none" onchange="visitPhoto(this)"></label>`:''}
+      ${VISIT.photo||!ruleOn('taskSequence')?`
+        ${deliv&&pend.length?pend.map(o=>`<button class="btn sm primary" style="flex:1 1 100%" onclick="deliverFor('${o.id}')">📦 ${T('del')}: ${esc(o.number)} · ${money(o.total)}</button>`).join(''):''}
+        <button class="btn sm ghost" style="flex:1" onclick="orderFor('${VISIT.client}')">${T('order')}</button>
+        <button class="btn sm ghost" style="flex:1" onclick="retFor('${VISIT.client}')">${T('ret')}</button>
+        <button class="btn sm danger" style="flex:1" onclick="refuseFor('${VISIT.client}')">${T('refuse')}</button>`:''}
+    </div>
+    <button class="btn primary" style="margin-top:10px" onclick="endVisit()">${T('endVisit')}</button></div>`;
+}
+let VTIMER=null;
+function tickVisit(){const e=document.getElementById('vt');if(!e||!VISIT)return;
+  const s=Math.floor((Date.now()-VISIT.startTs)/1000);
+  e.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function startVisit(cid){
+  if(VISIT&&VISIT.client!==cid){if(ruleOn('finishVisit')){toast('Сначала завершите текущий визит');return;}}
+  VISIT={client:cid,startTs:Date.now(),startAt:now(),photo:null,shelfPhotos:[],actions:[],geo:GEO};
+  clearInterval(VTIMER);VTIMER=setInterval(tickVisit,1000);
+  CPROF=cid;VIEW='cprofile';render();   // остаёмся в профиле клиента — визит идёт здесь
+}
+function visitPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{const img=new Image();img.onload=()=>{const max=500;let w=img.width,h=img.height;
+    if(w>h&&w>max){h=h*max/w;w=max;}else if(h>max){w=w*max/h;h=max;}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
+    VISIT.photo=cv.toDataURL('image/jpeg',0.6);render();toast('📷 OK');};img.src=r.result;};
+  r.readAsDataURL(f);}
+function endVisit(){
+  if(ruleOn('taskSequence')&&!VISIT.photo){toast(T('photo')+' *');return;}
+  // если нет заказа/возврата — обязательно причина (комментарий), даже если "магазин закрыт"
+  if(!VISIT.actions.length){visitComment();return;}
+  finishVisitTx('');
+}
+function visitComment(){
+  const rs=L('refusals');
+  openM(`<h2>Заказ не взят</h2><div class="hint" style="margin-bottom:12px">Укажите причину — без неё визит не засчитается и будет штраф.</div>
+    <div class="field"><label>Причина *</label><select id="vc_reason">${rs.map(r=>`<option>${esc(r.name)}</option>`).join('')||'<option>Магазин закрыт</option><option>Нет денег</option><option>Достаточно товара</option>'}</select></div>
+    <div class="field"><label>Комментарий</label><textarea id="vc" rows="2" placeholder="дополнительно…"></textarea></div>
+    <button class="btn primary" onclick="finishVisitTx((document.getElementById('vc_reason').value||'')+(document.getElementById('vc').value.trim()?': '+document.getElementById('vc').value.trim():''))">Завершить визит</button>`);
+}
+function finishVisitTx(comment){
+  if(!VISIT.actions.length&&!comment){toast('Укажите причину, почему нет заказа');return;}
+  const result=VISIT.actions.includes('refusal')?'refusal':VISIT.actions.includes('order')?'order':VISIT.actions.includes('return')?'return':'novisit';
+  const c=cli(VISIT.client);
+  const dur=Math.floor((Date.now()-VISIT.startTs)/1000);
+  // расстояние от места визита до координат точки (геозона — контроль фиктива)
+  let distM=null;if(c&&c.lat&&VISIT.geo){distM=Math.round((distKm(VISIT.geo,[c.lat,c.lng])||0)*1000);}
+  const p={id:uid('v'),client:VISIT.client,agent:me().id,date:today(),at:VISIT.startAt,endAt:now(),
+    durSec:dur,result,comment:comment||'',refusal:VISIT.refusal||'',photo:VISIT.photo||'',shelfPhotos:VISIT.shelfPhotos||[],
+    geo:VISIT.geo||GEO,distM};
+  txSend('visit',p);
+  clearInterval(VTIMER);VISIT=null;closeM();
+  if(VIEW==='cprofile')VIEW='routes';
+  render();
+}
+function refuseFor(cid){
+  const rs=L('refusals');
+  openM(`<h2>${T('refuse')}</h2>
+    <div class="field"><label>${T('reason')} *</label><select id="rf">${rs.map(r=>`<option>${esc(r.name)}</option>`).join('')||'<option value="">—</option>'}</select></div>
+    <button class="btn danger" onclick="VISIT.actions.push('refusal');VISIT.refusal=document.getElementById('rf').value;closeM();render()">${T('send')}</button>`);
+}
+
+/* ---------- ДОСТАВКА: Доставлено с зачётом возврата/депозита ---------- */
+function deliverFor(oid){
+  const o=(DATA.orders||[]).find(x=>x.id===oid);if(!o)return;const c=cli(o.client);
+  const dep=clientDeposit(o.client);            // уже имеющийся депозит магазина
+  openM(`<h2>📦 ${T('del')} · ${esc(o.number)}</h2>
+    <div class="card" style="padding:12px"><div class="row" style="border:none;padding:0"><span>${T('total')} заказа</span><b>${money(o.total)}</b></div>
+    ${dep>0?`<div class="row" style="border:none;padding:6px 0 0"><span class="pill green">Депозит магазина</span><b style="color:var(--green)">−${money(dep)}</b></div>`:''}</div>
+    <div class="field"><label>Возврат при доставке (просрочка/с полки) — сумма</label>
+      <input id="dv_ret" type="number" placeholder="0" oninput="dvCalc('${oid}')"></div>
+    <div class="field"><label>Получено деньгами от магазина</label>
+      <input id="dv_cash" type="number" value="${Math.max(0,o.total-dep)}" oninput="dvCalc('${oid}')"></div>
+    <div class="field"><label>Способ оплаты</label><select id="dv_m" onchange="dvPayBtns('${oid}')"><option value="cash">${T('cash')}</option><option value="terminal">${T('terminal')}</option><option value="transfer">${T('transfer')}</option><option value="click">Click (QR)</option><option value="payme">Payme (QR)</option></select></div>
+    <div id="dv_qr"></div>
+    <div class="card" style="padding:12px;background:#F4F8F4"><div class="row" style="border:none;padding:0"><b>Итог по магазину</b><b id="dv_res" style="color:var(--green)">—</b></div>
+      <div class="hint" id="dv_hint" style="margin-top:4px"></div></div>
+    <button class="btn primary" style="margin-top:12px" onclick="confirmDeliver('${oid}')">${T('del')}</button>`);
+  setTimeout(()=>dvCalc(oid),0);
+}
+function payUrl(kind,amount,ref){const ig=DATA.integrationsPublic||DATA.integrations||{};
+  if(kind==='payme'){const m=(ig.payme&&ig.payme.merchant||'').trim();if(!m)return null;
+    return 'https://checkout.paycom.uz/'+btoa('m='+m+';ac.order_id='+ref+';a='+Math.round(amount*100));}
+  if(kind==='click'){const c=ig.click||{};if(!(c.merchant||'').trim()||!(c.service||'').trim())return null;
+    return 'https://my.click.uz/services/pay?service_id='+encodeURIComponent(c.service)+'&merchant_id='+encodeURIComponent(c.merchant)+'&amount='+amount+'&transaction_param='+encodeURIComponent(ref);}
+  return null;}
+function dvPayBtns(oid){const o=(DATA.orders||[]).find(x=>x.id===oid);if(!o)return;
+  const m=$('#dv_m').value;const box=$('#dv_qr');if(!box)return;
+  if(m!=='click'&&m!=='payme'){box.innerHTML='';return;}
+  const amt=+($('#dv_cash')?.value)||o.total;
+  const url=payUrl(m,amt,'HB-'+oid);
+  if(!url){box.innerHTML=`<div class="hint" style="color:var(--red);margin-bottom:10px">Реквизиты ${m==='click'?'Click':'Payme'} не заполнены администратором (Настройки → Интеграции).</div>`;return;}
+  const qr='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(url);
+  box.innerHTML=`<div class="card" style="text-align:center;padding:14px">
+    <b style="font-size:13px">Покажите QR магазину для оплаты ${m==='click'?'Click':'Payme'}</b>
+    <img src="${qr}" style="width:200px;height:200px;margin:10px auto;display:block;border-radius:12px;background:#fff">
+    <div class="hint">${money(amt)} · после оплаты нажмите «Доставлено»</div></div>`;}
+function dvCalc(oid){const o=(DATA.orders||[]).find(x=>x.id===oid);if(!o)return;
+  const dep=clientDeposit(o.client);
+  const ret=+($('#dv_ret')?.value)||0;
+  const cash=+($('#dv_cash')?.value)||0;
+  // покрытие нового заказа = деньги + депозит + возврат(в зачёт)
+  const covered=cash+dep+ret;
+  const balance=covered-o.total;   // >0 излишек -> депозит, <0 остаток -> долг
+  const res=$('#dv_res'),hint=$('#dv_hint');
+  if(res){
+    if(balance>0){res.textContent='депозит +'+money(balance);res.style.color='var(--green)';}
+    else if(balance<0){res.textContent='долг '+money(-balance);res.style.color='var(--red)';}
+    else{res.textContent='0 — закрыто';res.style.color='var(--green)';}
+  }
+  if(hint)hint.textContent=`Заказ ${money(o.total)} = деньги ${money(cash)}${dep>0?' + депозит '+money(dep):''}${ret>0?' + возврат '+money(ret):''}`;
+}
+function confirmDeliver(oid){
+  const o=(DATA.orders||[]).find(x=>x.id===oid);if(!o)return;const c=cli(o.client);
+  const dep=clientDeposit(o.client);
+  const ret=+($('#dv_ret')?.value)||0;
+  const cash=+($('#dv_cash')?.value)||0;
+  const m=$('#dv_m').value;
+  let returnTxId='';
+  // если был возврат деньгами — оформляем отдельной return-операцией (товар на склад возврата, долг вниз)
+  if(ret>0){returnTxId=uid('r');
+    txSend('return',{id:returnTxId,client:o.client,agent:me().id,date:today(),at:now(),type:'expired',
+      items:[],amount:ret,orderId:'',orderDate:'',viaDelivery:true});}
+  const p={id:uid('o'),deliverOf:oid,client:o.client,agent:me().id,date:today(),at:now(),
+    orderTotal:o.total,cash,deposit:dep,returnAmt:ret,returnTxId,method:m,items:o.items||[]};
+  txSend('deliver',p);
+  // локально: заказ доставлен, баланс пересчитан
+  // долг>0, депозит<0. Возврат и деньги уменьшают долг, новый заказ увеличивает.
+  o.status='delivered';o.deliveredAt=now();
+  if(c){c.debt=(c.debt||0)+o.total-ret-cash;}
+  if(VISIT&&VISIT.client===o.client)VISIT.actions.push('order');
+  closeM();render();toast('Доставлено: '+o.number);
+}
+
+/* ---------- МАРШРУТЫ ---------- */
+let RFILT={days:null,q:'',mode:'all'};
+function vRoutes(){
+  const m=me();
+  const myRoutes=L('routes').filter(r=>(!m.terr||r.terr===m.terr)&&!((m.restrictRoutes||[]).includes(r.id)));
+  // по умолчанию — маршрут сегодняшнего дня
+  if(!RFILT.days){const dow=(new Date(today()+'T12:00').getDay()+6)%7+1;
+    const todayR=myRoutes.filter(r=>r.dow===dow).map(r=>r.id);
+    RFILT.days=todayR.length?todayR:myRoutes.map(r=>r.id);}
+  let clients=myClients().filter(c=>RFILT.days.includes(c.route));
+  if(RFILT.q){const q=RFILT.q.toLowerCase();clients=clients.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.addr||'').toLowerCase().includes(q));}
+  if(RFILT.mode==='order')clients=clients.filter(c=>!visitedToday(c.id));
+  if(RFILT.mode==='ret')clients=clients.filter(c=>c.debt<0||visitedToday(c.id));
+  if(GEO)clients.sort((a,b)=>(distKm(GEO,[a.lat,a.lng])||99)-(distKm(GEO,[b.lat,b.lng])||99));
+  const done=myClients().filter(c=>RFILT.days.includes(c.route)&&visitedToday(c.id)).length;
+  const total=myClients().filter(c=>RFILT.days.includes(c.route)).length;
+  $('#page').innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 12px">
+    <div style="font-size:19px;font-weight:800">Маршрут <span style="color:var(--muted)">(${done}/${total})</span></div>
+    <span class="pill gray">${today().split('-').reverse().slice(0,2).join('.')}</span></div>
+  <div class="search"><input placeholder="Поиск" value="${esc(RFILT.q)}" oninput="RFILT.q=this.value;vRoutes()"></div>
+  <div class="chiprow">
+    <button class="chip ${RFILT.mode==='all'?'on':''}" onclick="RFILT.mode='all';vRoutes()">Все</button>
+    <button class="chip ${RFILT.mode==='order'?'on':''}" onclick="RFILT.mode='order';vRoutes()">🛒 Заказ</button>
+    <button class="chip ${RFILT.mode==='ret'?'on':''}" onclick="RFILT.mode='ret';vRoutes()">⇄ Возврат</button>
+  </div>
+  <div class="chiprow">${myRoutes.map(r=>`<button class="chip ${RFILT.days.includes(r.id)?'on':''}" style="padding:8px 14px;font-size:13px" onclick="toggleDay('${r.id}')">${esc(r.name)}</button>`).join('')}</div>
+  ${clients.length?clients.map(c=>{
+    const v=visitedToday(c.id);const d=GEO&&c.lat?distKm(GEO,[c.lat,c.lng]):null;
+    return `<div class="rcard">
+      <div class="rtop">
+        <div class="rname">${esc(c.name)}</div>
+        <div class="raddr">${esc(c.addr||'')}${c.landmark?' · '+esc(c.landmark):''}</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="pill ${v?'green':'gray'}">${v?'Посещён':'Заказ'}</span>
+          ${d!=null?`<span class="pill blue">${d.toFixed(1)} км</span>`:''}
+          ${c.debt>0?`<span class="pill red">Долг ${money(c.debt)}</span>`:''}
+          ${c.debt<0?`<span class="pill green">Депозит ${money(-c.debt)}</span>`:''}</div>
+      </div>
+      <div class="ract">
+        <button onclick="startVisit('${c.id}')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>Визит</button>
+        <button onclick="clientCard('${c.id}')">Действие <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+      </div></div>`}).join(''):`<div class="empty">${L('clients').length?'Нет точек по фильтру':T('noData')}</div>`}
+  <div class="dock">
+    <button onclick="go('map');setTimeout(buildRoute,800)"><svg viewBox="0 0 24 24"><path d="M4 7h10M4 12h7M4 17h13"/><path d="M18 5l3 3-3 3"/></svg>Проложить</button>
+    <button onclick="go('map')"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Карта</button>
+  </div>`;
+}
+function toggleDay(id){const i=RFILT.days.indexOf(id);if(i>=0)RFILT.days.splice(i,1);else RFILT.days.push(id);vRoutes();}
+
+/* профиль клиента — полноэкранный, стиль Xolva */
+function clientCard(cid){const c=cli(cid);if(!c)return;
+  CPROF=cid;VIEW='cprofile';render();
+}
+let CPROF=null;
+function vCprofile(){
+  const c=cli(CPROF);if(!c){VIEW='clients';return render();}
+  const v=visitedToday(c.id);
+  const ass=clientAssortment(c.id);
+  $('#page').innerHTML=`
+  <div style="display:flex;align-items:center;gap:14px;margin:2px 0 16px">
+    <div style="width:60px;height:60px;border-radius:16px;background:#EEF1F5 center/cover;flex:0 0 auto;display:grid;place-items:center" ${c.photo?`style="background-image:url('${c.photo}')"`:''}>${c.photo?'':'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#9BB0D0" stroke-width="1.6"><path d="M4 18l5-6 4 4 3-3 4 5"/><circle cx="9" cy="8" r="2"/></svg>'}</div>
+    <div style="font-size:21px;font-weight:800;color:var(--navy);line-height:1.2">${esc(c.name)}</div></div>
+  <div style="background:var(--navy);color:#fff;border-radius:18px;padding:18px;margin-bottom:16px">
+    <div style="font-size:13px;color:#B8C2D6">Баланс</div>
+    <div style="font-size:28px;font-weight:800;margin-top:4px;color:${c.debt>0?'#FF6B6B':c.debt<0?'#5BE0A0':'#fff'}">${c.debt>0?'-':c.debt<0?'+':''}${money(Math.abs(c.debt||0))} <span style="font-size:16px">сум</span></div>
+    <div onclick="clientHistory('${c.id}')" style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);margin-top:14px;padding-top:14px;cursor:pointer">
+      <b>Взаиморасчёты</b><span style="font-size:20px">›</span></div></div>
+  <div class="card" onclick="clientAssort('${c.id}')" style="display:flex;align-items:center;gap:13px;cursor:pointer">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9z"/><path d="M12 11l8-4.5M12 11v9M12 11L4 6.5"/></svg>
+    <b style="font-size:15px">Ассортимент закупки</b></div>
+  <div style="margin:16px 0">
+    <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px">
+      <div style="width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:0 0 auto;background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.8"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div style="flex:1"><div style="font-weight:700;font-size:16px;margin-bottom:8px">Визит</div>
+        ${VISIT&&VISIT.client===c.id?`
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="pill blue">Визит идёт</span><span class="timer" id="vt">00:00</span></div>
+          ${canDeliver()&&pendingDelivery(c.id).length?pendingDelivery(c.id).map(o=>`<button class="btn gold" style="margin-bottom:8px" onclick="deliverFor('${o.id}')">📦 Доставить: ${esc(o.number)} · ${money(o.total)}</button>`).join(''):''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost" style="flex:1;min-width:90px;color:var(--accent);border-color:var(--accent)" onclick="orderFor('${c.id}')">Заказ</button>
+            <button class="btn ghost" style="flex:1;min-width:90px" onclick="retFor('${c.id}')">Возврат</button>
+          </div>
+          <button class="btn primary" style="margin-top:8px" onclick="endVisit()">Завершить визит</button>
+        `:v?`<span class="pill green">Посещён сегодня</span>`
+        :`<button class="btn ghost" style="width:auto;display:inline-flex;align-items:center;gap:8px;color:var(--accent);border-color:var(--accent)" onclick="startVisit('${c.id}')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>Начать визит</button>`}</div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:14px">
+      <div style="width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:0 0 auto;background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.8"><path d="M4 18l5-6 4 4 3-3 4 5"/><circle cx="9" cy="8" r="2"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
+      <div style="flex:1"><div style="font-weight:700;font-size:16px;margin-bottom:8px">Фото отчёт</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${(VISIT&&VISIT.client===c.id&&VISIT.shelfPhotos||[]).map(p=>`<img src="${p}" style="width:64px;height:64px;border-radius:12px;object-fit:cover">`).join('')}
+        <label style="width:64px;height:64px;border-radius:12px;border:1.5px dashed var(--line);display:grid;place-items:center;cursor:pointer;color:var(--muted)"><span style="font-size:26px">+</span><input type="file" accept="image/*" capture="environment" style="display:none" onchange="shelfPhoto('${c.id}',this)"></label></div></div>
+    </div>
+  </div>
+  <div class="dock" style="background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 4px;box-shadow:0 6px 20px rgba(28,37,54,.12)">
+    ${c.phone?`<button style="background:none;color:var(--navy);box-shadow:none;flex-direction:column;gap:3px;font-size:11px;padding:8px 16px" onclick="window.open('tel:${esc(c.phone)}')"><svg viewBox="0 0 24 24" stroke="var(--navy)"><path d="M4 5l4-1 2 5-2.5 1.5a11 11 0 005 5L15 13l5 2-1 4a2 2 0 01-2 1.5C9 20 4 14 3.5 7A2 2 0 014 5z"/></svg>Позвонить</button>`:''}
+    <button style="background:none;color:var(--navy);box-shadow:none;flex-direction:column;gap:3px;font-size:11px;padding:8px 16px" onclick="${c.lat?`window.open('https://yandex.ru/maps/?pt=${c.lng}%2C${c.lat}&z=17')`:`toast('Нет координат')`}"><svg viewBox="0 0 24 24" stroke="var(--navy)"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Карта</button>
+    <button style="background:none;color:var(--navy);box-shadow:none;flex-direction:column;gap:3px;font-size:11px;padding:8px 16px" onclick="clientActions('${c.id}')"><svg viewBox="0 0 24 24" stroke="var(--navy)"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Действия</button>
+  </div>`;
+}
+function clientActions(cid){
+  openM(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><h2 style="margin:0">Действия</h2><span onclick="closeM()" style="font-size:22px;color:var(--muted)">✕</span></div>
+    <div class="row" onclick="closeM();orderFor('${cid}')" style="cursor:pointer"><span style="display:flex;align-items:center;gap:13px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7"><path d="M5 8h14l-1.5 9h-11z"/><path d="M8 8a4 4 0 018 0"/></svg>Оформить заказ</span></div>
+    <div class="row" onclick="closeM();retFor('${cid}')" style="cursor:pointer"><span style="display:flex;align-items:center;gap:13px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7"><path d="M4 9h13l-3-3M20 15H7l3 3"/></svg>Возврат</span></div>
+    <div class="row" onclick="closeM();clientNote('${cid}')" style="cursor:pointer"><span style="display:flex;align-items:center;gap:13px;font-size:15px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>Напоминание</span></div>
+    <div class="row" onclick="closeM()" style="cursor:pointer;border:none"><span style="display:flex;align-items:center;gap:13px;font-size:15px;color:var(--muted)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.7"><path d="M6 6l12 12M18 6L6 18"/></svg>Отмена</span></div>`);
+}
+function clientNote(cid){
+  openM(`<h2>Напоминание</h2>
+    <div class="field"><label>Текст напоминания</label><textarea id="cn_txt" rows="3" placeholder="Например: завезти прайс, забрать возврат…"></textarea></div>
+    <button class="btn primary" onclick="sendNote('${cid}')">Сохранить</button>`);
+}
+function sendNote(cid){const t=($('#cn_txt')?.value||'').trim();if(!t){toast('Введите текст');return;}
+  txSend('note',{id:uid('n'),client:cid,agent:me().id,date:today(),at:now(),text:t});closeM();toast('Сохранено');}
+function clientAssort(cid){
+  const ass=clientAssortment(cid);
+  openM(`<h2>Ассортимент закупки</h2>
+    ${ass.length?ass.map(a=>`<div class="row"><span>${esc(a.name)}</span><b>${a.qty} шт · ${a.times}×</b></div>`).join(''):'<div class="empty">Пока нет истории закупок этой точки</div>'}
+    <button class="btn ghost" style="margin-top:12px" onclick="closeM()">Закрыть</button>`);
+}
+function clientAssortment(cid){
+  // что обычно берёт точка (по истории заказов)
+  const map={};
+  (DATA.orders||[]).filter(o=>o.client===cid).forEach(o=>(o.items||[]).forEach(i=>{
+    if(!map[i.p])map[i.p]={qty:0,times:0};map[i.p].qty+=i.q;map[i.p].times++;}));
+  MYTX.filter(t=>t.type==='order'&&t.payload.client===cid).forEach(t=>(t.payload.items||[]).forEach(i=>{
+    if(!map[i.p])map[i.p]={qty:0,times:0};map[i.p].qty+=i.q;map[i.p].times++;}));
+  return Object.entries(map).map(([p,v])=>({name:prod(p)?.name||'?',qty:v.qty,times:v.times})).sort((a,b)=>b.qty-a.qty).slice(0,20);
+}
+function clientHistory(cid){
+  const c=cli(cid);
+  const ords=[...(DATA.orders||[]).filter(o=>o.client===cid),...MYTX.filter(t=>t.type==='order'&&t.payload.client===cid).map(t=>t.payload)];
+  openM(`<h2>Взаиморасчёты — ${esc(c.name)}</h2>
+    <div class="card" style="background:var(--navy);color:#fff"><div style="font-size:13px;color:#B8C2D6">Текущий баланс</div>
+      <div style="font-size:22px;font-weight:800;color:${c.debt>0?'#FF6B6B':'#5BE0A0'}">${c.debt>0?'-':c.debt<0?'+':''}${money(Math.abs(c.debt||0))}</div></div>
+    <div class="hint" style="margin:10px 0 6px">Последние заказы</div>
+    ${ords.length?ords.slice(-15).reverse().map(o=>`<div class="row"><span>${String(o.date||o.at||'').split('T')[0]}</span><b>${money(o.total||0)}</b></div>`).join(''):'<div class="empty">Нет операций</div>'}
+    <button class="btn ghost" style="margin-top:12px" onclick="closeM()">Закрыть</button>`);
+}
+function shelfPhoto(cid,inp){const f=inp.files&&inp.files[0];if(!f)return;
+  if(!(VISIT&&VISIT.client===cid)){toast('Сначала начните визит');return;}
+  const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=900;let w=img.width,h=img.height;
+    if(w>h&&w>max){h=h*max/w;w=max;}else if(h>max){w=w*max/h;h=max;}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
+    VISIT.shelfPhotos=VISIT.shelfPhotos||[];VISIT.shelfPhotos.push(cv.toDataURL('image/jpeg',0.6));render();};img.src=r.result;};
+  r.readAsDataURL(f);}
+
+/* ---------- КЛИЕНТЫ ---------- */
+let CQ='';
+let CFILT={balance:false,dist:false,debtors:false,routes:null};
+function vClients(){
+  let list=myClients();
+  if(CQ){const q=CQ.toLowerCase();list=list.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q)||(c.addr||'').toLowerCase().includes(q));}
+  if(CFILT.routes&&CFILT.routes.length)list=list.filter(c=>CFILT.routes.includes(c.route));
+  if(CFILT.debtors)list=list.filter(c=>c.debt>0);
+  if(CFILT.dist&&GEO)list.sort((a,b)=>(distKm(GEO,[a.lat,a.lng])||99)-(distKm(GEO,[b.lat,b.lng])||99));
+  const canAdd=RULES().addClient?(RULES().addClient.enabled||excl('addClient')):true;
+  $('#page').innerHTML=`
+  <div style="font-size:19px;font-weight:800;margin:2px 0 12px">Клиенты <span style="color:var(--muted)">(${list.length})</span></div>
+  <div class="search"><input placeholder="Поиск клиента…" value="${esc(CQ)}" oninput="CQ=this.value;vClients()">
+    <button class="btn sm ghost" style="padding:0 14px" onclick="clientFilters()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16M7 12h10M10 18h4"/></svg></button></div>
+  ${list.slice(0,300).map(c=>{const d=CFILT.dist&&GEO&&c.lat?distKm(GEO,[c.lat,c.lng]):null;
+    return `<div class="ccard" onclick="clientCard('${c.id}')">
+    <div style="flex:1;min-width:0">
+      <div style="font-size:16px;font-weight:700;color:var(--navy)">${esc(c.name)}</div>
+      <div class="hint" style="margin-top:2px">${esc(c.addr||route(c.route)?.name||'—')}</div>
+      <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+      ${(CFILT.balance||CFILT.debtors)&&c.debt>0?`<span class="pill red">Долг ${money(c.debt)}</span>`:''}
+      ${CFILT.balance&&c.debt<0?`<span class="pill green">Депозит ${money(-c.debt)}</span>`:''}
+      ${d!=null?`<span class="pill blue">${d.toFixed(1)} км</span>`:''}</div>
+    </div>
+    <div class="cph" ${c.photo?`style="background-image:url('${c.photo}')"`:''}>${c.photo?'':'<svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 4 3-3 4 5"/><circle cx="9" cy="8" r="2"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>'}</div>
+  </div>`}).join('')||`<div class="empty">${T('noData')}</div>`}
+  <div class="dock">
+    ${canAdd?`<button onclick="addClientForm()"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить клиент</button>`:''}
+    <button onclick="go('map')"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Карта</button>
+  </div>`;
+}
+function clientFilters(){
+  const m=me();
+  const routes=L('routes').filter(r=>(!m.terr||r.terr===m.terr)&&!((m.restrictRoutes||[]).includes(r.id)));
+  if(!CFILT.routes)CFILT.routes=routes.map(r=>r.id);
+  const sw=(on,fn)=>`<div onclick="${fn}" style="width:48px;height:28px;border-radius:99px;background:${on?'var(--accent)':'#D5DBE5'};position:relative;transition:background .15s;cursor:pointer"><div style="position:absolute;top:3px;left:${on?'23px':'3px'};width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s"></div></div>`;
+  const allOn=CFILT.routes.length===routes.length;
+  openM(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><h2 style="margin:0">Фильтры</h2><span onclick="closeM()" style="font-size:22px;color:var(--muted)">✕</span></div>
+    <div class="row"><span style="font-size:15px">Показать баланс</span>${sw(CFILT.balance,"CFILT.balance=!CFILT.balance;clientFilters()")}</div>
+    <div class="row"><span style="font-size:15px">Показать расстояния</span>${sw(CFILT.dist,"CFILT.dist=!CFILT.dist;clientFilters()")}</div>
+    <div class="row"><span style="font-size:15px">Показать должники</span>${sw(CFILT.debtors,"CFILT.debtors=!CFILT.debtors;clientFilters()")}</div>
+    <h2 style="margin:16px 0 8px;font-size:16px">Маршрут</h2>
+    <label style="display:flex;align-items:center;gap:12px;padding:10px 0;font-size:15px"><input type="checkbox" ${allOn?'checked':''} onchange="cfAllRoutes(this.checked)" style="width:20px;height:20px">Все</label>
+    ${routes.map(r=>`<label style="display:flex;align-items:center;gap:12px;padding:10px 0;font-size:15px"><input type="checkbox" ${CFILT.routes.includes(r.id)?'checked':''} onchange="cfToggleRoute('${r.id}',this.checked)" style="width:20px;height:20px">${esc(r.name)}</label>`).join('')}
+    <button class="btn gold" style="margin-top:14px;position:sticky;bottom:0" onclick="closeM();vClients()">Подтвердить</button>`);
+}
+function cfAllRoutes(on){const m=me();const routes=L('routes').filter(r=>(!m.terr||r.terr===m.terr));CFILT.routes=on?routes.map(r=>r.id):[];clientFilters();}
+function cfToggleRoute(id,on){if(on){if(!CFILT.routes.includes(id))CFILT.routes.push(id);}else CFILT.routes=CFILT.routes.filter(x=>x!==id);clientFilters();}
+let NEWCPH=null, NCGEO=null, NCPICK=null, DRAFT_T=null;
+function addClientForm(){
+  CPROF=null;VIEW='caddform';NAVH.push('clients');render();
+}
+function vCaddform(){
+  const rf=(RULES().addClient||{}).requiredFields||{};
+  const req=k=>rf[k]!==false?' <span style="color:var(--accent)">*</span>':'';
+  const d=ST.clientDraft||{};
+  if(!NEWCPH)NEWCPH=d.photo||null; if(!NCGEO)NCGEO=d.geo||(GEO?[GEO[0],GEO[1]]:null);
+  $('#page').innerHTML=`
+  ${ST.clientDraft?`<div class="hint" style="margin-bottom:10px;color:var(--green)">↩ Черновик восстановлен</div>`:''}
+  <div style="background:#EEF3FF;border-radius:18px;height:200px;position:relative;margin-bottom:18px;background-size:cover;background-position:center" ${NEWCPH?`style="height:200px;border-radius:18px;margin-bottom:18px;background-image:url('${NEWCPH}');background-size:cover;background-position:center"`:''}>
+    ${NEWCPH?'':'<div style="position:absolute;inset:0;display:grid;place-items:center"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#9BB4E8" stroke-width="1.4"><path d="M4 18l5-6 4 4 3-3 4 5"/><circle cx="9" cy="8" r="2"/></svg></div>'}
+    <label style="position:absolute;right:14px;bottom:14px;background:#fff;border-radius:999px;padding:11px 20px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.1)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.9"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>Загрузить
+      <input type="file" accept="image/*" capture="environment" style="display:none" onchange="ncPhoto(this)"></label>
+  </div>
+  <div class="field"><label>Название${req('name')}</label><input id="nc_name" value="${esc(d.name||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>Территория${req('terr')}</label><select id="nc_terr" onchange="ncRoutes();ncDraft()"><option value="">—</option>${L('territories').map(t=>`<option value="${t.id}" ${d.terr===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div>
+  <div class="field"><label>Маршрут${req('route')}</label><select id="nc_route" onchange="ncDraft()"><option value="">—</option>${d.terr?L('routes').filter(r=>r.terr===d.terr).map(r=>`<option value="${r.id}" ${d.route===r.id?'selected':''}>${esc(r.name)}</option>`).join(''):''}</select></div>
+  <div class="field"><label>Тип клиента${req('type')}</label><select id="nc_type" onchange="ncDraft()"><option value="">—</option>${L('clientTypes').map(t=>`<option value="${t.id}" ${d.type===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div>
+  <div class="field"><label>Телефон${req('phone')}</label><input id="nc_phone" type="tel" value="${esc(d.phone||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>Адрес${req('address')}</label><input id="nc_addr" value="${esc(d.addr||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>Ориентир${req('landmark')}</label><input id="nc_landmark" value="${esc(d.landmark||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>Название юридического лица</label><input id="nc_legal" value="${esc(d.legal||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>ИНН</label><input id="nc_inn" type="number" value="${esc(d.inn||'')}" oninput="ncDraft()"></div>
+  <div class="field"><label>Контактное лицо</label><input id="nc_contact" value="${esc(d.contact||'')}" oninput="ncDraft()"></div>
+  <div class="card" onclick="locationPicker()" style="display:flex;align-items:center;gap:14px;cursor:pointer">
+    <div style="width:64px;height:54px;border-radius:12px;background:#EEF1F5 center/cover;flex:0 0 auto;display:grid;place-items:center" ${NCGEO?`style="width:64px;height:54px;border-radius:12px;flex:0 0 auto;background:url('https://static-maps.yandex.ru/1.x/?ll=${NCGEO[1]},${NCGEO[0]}&z=15&size=130,108&l=map&pt=${NCGEO[1]},${NCGEO[0]},pm2rdm') center/cover"`:''}>${NCGEO?'':'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BB0D0" stroke-width="1.6"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/></svg>'}</div>
+    <div style="flex:1"><div class="hint">Локация</div><b style="font-size:15px">${NCGEO?'📍 '+NCGEO[0].toFixed(5)+', '+NCGEO[1].toFixed(5):'Добавить местоположение'}</b></div>
+    <span style="font-size:22px;color:var(--muted)">›</span></div>
+  <button class="btn gold" style="margin:8px 0" onclick="saveNewClient()">Сохранить</button>
+  <button class="btn ghost" onclick="clearDraft();VIEW='clients';render()">Отмена</button>`;
+}
+function ncDraft(){clearTimeout(DRAFT_T);DRAFT_T=setTimeout(()=>{const v=id=>($('#nc_'+id)?.value||'');
+  ST.clientDraft={name:v('name'),type:v('type'),terr:v('terr'),route:v('route'),legal:v('legal'),inn:v('inn'),
+    contact:v('contact'),phone:v('phone'),addr:v('addr'),landmark:v('landmark'),photo:NEWCPH,geo:NCGEO};
+  save();},400);}
+function clearDraft(){ST.clientDraft=null;NEWCPH=null;NCGEO=null;save();}
+function ncRoutes(){const t=$('#nc_terr').value;$('#nc_route').innerHTML='<option value="">—</option>'+L('routes').filter(r=>r.terr===t).map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('');}
+function ncPhoto(inp){const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{const img=new Image();img.onload=()=>{const max=700;let w=img.width,h=img.height;
+    if(w>h&&w>max){h=h*max/w;w=max;}else if(h>max){w=w*max/h;h=max;}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
+    NEWCPH=cv.toDataURL('image/jpeg',0.6);ncDraft();vCaddform();};img.src=r.result;};
+  r.readAsDataURL(f);}
+/* ОТДЕЛЬНЫЙ экран выбора локации (стиль Xolva) */
+function locationPicker(){VIEW='locpick';NAVH.push('caddform');render();}
+function vLocpick(){
+  $('#page').innerHTML=`
+  <div class="search"><input id="lp_q" placeholder="Поиск адреса…" onkeydown="if(event.key==='Enter')lpSearch()"></div>
+  <div style="position:relative"><div id="pickmap" style="height:62vh"></div></div>
+  <button class="btn primary" style="position:fixed;left:16px;right:16px;bottom:90px;z-index:24" onclick="lpConfirm()">Выбрать локацию</button>`;
+  setTimeout(initPickMap,60);
+}
+function lpSearch(){const q=($('#lp_q')?.value||'').trim();if(!q||!window.ymaps)return;
+  ymaps.geocode(q,{results:1}).then(res=>{const obj=res.geoObjects.get(0);if(!obj){toast('Не найдено');return;}
+    const c=obj.geometry.getCoordinates();if(NCPICK&&NCPICK._setPt){NCPICK._setPt(c);NCPICK.setCenter(c,17);}});}
+function lpConfirm(){if(!NCGEO){toast('Отметьте точку на карте');return;}ncDraft();VIEW='caddform';render();}
+/* карта для отметки точки */
+function initPickMap(){
+  const key=(DATA.integrationsPublic&&DATA.integrationsPublic.yandex&&DATA.integrationsPublic.yandex.apikey)||'';
+  const run=()=>ymaps.ready(()=>{
+    const el=document.getElementById('pickmap');if(!el)return;
+    if(NCPICK){try{NCPICK.destroy();}catch(e){}}
+    const c=NCGEO||GEO||[41.311,69.279];
+    NCPICK=new ymaps.Map('pickmap',{center:c,zoom:NCGEO?17:13,controls:['zoomControl']});
+    let mk=null;
+    const setPt=(coords)=>{NCGEO=coords;
+      if($('#nc_coords'))$('#nc_coords').textContent='📍 '+coords[0].toFixed(5)+', '+coords[1].toFixed(5);
+      if(mk)mk.geometry.setCoordinates(coords);
+      else{mk=new ymaps.Placemark(coords,{},{preset:'islands#redDotIcon',draggable:true});
+        mk.events.add('dragend',()=>{NCGEO=mk.geometry.getCoordinates();ncDraft();
+          if($('#nc_coords'))$('#nc_coords').textContent='📍 '+NCGEO[0].toFixed(5)+', '+NCGEO[1].toFixed(5);});
+        NCPICK.geoObjects.add(mk);}ncDraft();};
+    if(NCGEO)setPt(NCGEO);
+    NCPICK.events.add('click',e=>setPt(e.get('coords')));
+    NCPICK._setPt=setPt;
+  });
+  if(window.ymaps&&window.ymaps.Map)run();
+  else if(!window._ymload){window._ymload=1;const sc=document.createElement('script');
+    sc.src='https://api-maps.yandex.ru/2.1/?lang=ru_RU'+(key?'&apikey='+encodeURIComponent(key):'');
+    sc.onload=run;document.head.appendChild(sc);}
+  else{const wait=setInterval(()=>{if(window.ymaps&&window.ymaps.Map){clearInterval(wait);run();}},300);}
+}
+/* кнопка «Точнее» — берём текущую точную геопозицию телефона */
+function ncLocate(){
+  if(!navigator.geolocation){toast('GPS недоступен');return;}
+  toast('🎯 '+T('moreAcc')+'…');
+  navigator.geolocation.getCurrentPosition(p=>{
+    const c=[p.coords.latitude,p.coords.longitude];GEO=c;
+    if(NCPICK&&NCPICK._setPt){NCPICK._setPt(c);NCPICK.setCenter(c,17);}
+    else{NCGEO=c;if($('#nc_coords'))$('#nc_coords').textContent='📍 '+c[0].toFixed(5)+', '+c[1].toFixed(5);}
+    ncDraft();
+  },()=>toast('Не удалось определить геопозицию'),{enableHighAccuracy:true,timeout:10000,maximumAge:0});
+}
+function saveNewClient(){
+  const rf=(RULES().addClient||{}).requiredFields||{};const v=id=>($('#nc_'+id)?.value||'').trim();
+  const need=(k,val,label)=>{if(rf[k]!==false&&!val){toast(label+' *');return true;}return false;};
+  if(need('photo',NEWCPH,T('photo')))return;
+  if(need('name',v('name'),'Название'))return;
+  if(need('type',v('type'),'Тип'))return;
+  if(need('terr',v('terr'),'Территория'))return;
+  if(need('route',v('route'),T('route')))return;
+  if(need('legal',v('legal'),'Юр. лицо'))return;
+  if(need('contact',v('contact'),'Контакт'))return;
+  if(need('phone',v('phone'),'Телефон'))return;
+  if(need('address',v('addr'),'Адрес'))return;
+  if(need('landmark',v('landmark'),'Ориентир'))return;
+  if(rf.geo!==false&&!NCGEO){toast('Отметьте точку на карте');return;}
+  const g=NCGEO||GEO;
+  const p={id:uid('cl'),name:v('name'),legal:v('legal')||v('name'),owner:v('contact')||'—',contact:v('contact')||'—',phone:v('phone')||'—',
+    addr:v('addr')||'—',landmark:v('landmark')||'—',inn:v('inn')||'',terr:v('terr'),route:v('route'),type:v('type'),discount:0,agent:me().id,
+    debt:0,active:true,created:today(),lat:g?g[0]:null,lng:g?g[1]:null,photo:NEWCPH||''};
+  txSend('client',p);
+  (DATA.clients=DATA.clients||[]).push(p);
+  clearDraft();NEWCPH=null;NCGEO=null;
+  VIEW='clients';render();toast('Клиент добавлен');
+}
+
+/* ---------- КАТАЛОГ / ЗАКАЗ ---------- */
+let KCAT='all',KQ='',ORDCLI=null,KVIEW='grid';
+function vCatalog(){
+  let ps=L('products').filter(allowedProd);
+  if(KCAT!=='all')ps=ps.filter(p=>p.cat===KCAT);
+  if(KQ){const q=KQ.toLowerCase();ps=ps.filter(p=>(p.name||'').toLowerCase().includes(q));}
+  const n=Object.values(CART).reduce((s,q)=>s+q,0);
+  const catName=KCAT==='all'?'Все товары':(cat(KCAT)?.name||'');
+  $('#page').innerHTML=`
+  <div class="search">
+    <button class="btn sm ghost" style="padding:0 12px" onclick="scanProduct()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M20 14v7M14 20h3"/></svg></button>
+    <input placeholder="Поиск товаров…" value="${esc(KQ)}" oninput="KQ=this.value;vCatalog()">
+    <button class="btn sm ghost" style="padding:0 12px" onclick="catPicker()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16M7 12h10M10 18h4"/></svg></button>
+    <button class="btn sm ghost" style="padding:0 12px" onclick="KVIEW='${KVIEW==='grid'?'list':'grid'}';vCatalog()">${KVIEW==='grid'?'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16M4 12h16M4 18h16"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>'}</button>
+  </div>
+  ${KCAT!=='all'?`<div style="margin-bottom:10px"><span class="pill blue">${esc(catName)} ✕</span></div>`:''}
+  ${KVIEW==='grid'?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+    ${ps.map(p=>`<div class="card" style="padding:0;overflow:hidden;margin:0">
+      <div style="position:relative;height:130px;background:#EEF1F5 center/cover" ${p.photo?`style="height:130px;background:url('${p.photo}') center/cover"`:''}>
+        <span style="position:absolute;left:8px;bottom:8px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px">${p.stock||0} шт.</span></div>
+      <div style="padding:11px">
+        <b style="color:var(--navy);font-size:15px">${money(p.price)}</b>
+        <div style="font-size:13px;margin:4px 0 9px;line-height:1.3;min-height:34px">${esc(p.name)}</div>
+        ${CART[p.id]?`<div style="display:flex;align-items:center;gap:8px"><button class="btn gold" style="padding:8px;flex:0 0 36px" onclick="cartStep('${p.id}',-1)">−</button><b style="flex:1;text-align:center">${CART[p.id]}</b><button class="btn gold" style="padding:8px;flex:0 0 36px" onclick="cartStep('${p.id}',1)">+</button></div>`
+          :`<button class="btn gold" onclick="cartStep('${p.id}',1)">Добавить</button>`}
+      </div></div>`).join('')}</div>`
+  :`${ps.map(p=>`<div class="ccard" style="gap:13px">
+      <div class="prodimg" ${p.photo?`style="background-image:url('${p.photo}')"`:''}></div>
+      <div style="flex:1;min-width:0"><b style="color:var(--navy);font-size:15px">${esc(p.name)}</b>
+        <div style="font-size:14px;margin-top:3px">${money(p.price)}</div>
+        <div class="hint">Остаток: ${p.stock||0} шт.</div></div>
+      ${CART[p.id]?`<div style="display:flex;align-items:center;gap:6px"><button class="btn gold" style="padding:7px;width:34px" onclick="cartStep('${p.id}',-1)">−</button><b>${CART[p.id]}</b><button class="btn gold" style="padding:7px;width:34px" onclick="cartStep('${p.id}',1)">+</button></div>`
+        :`<button class="btn gold" style="width:auto;padding:10px 18px" onclick="cartStep('${p.id}',1)">Добавить</button>`}
+    </div>`).join('')}`}
+  ${ps.length?'':`<div class="empty">${T('noData')}</div>`}
+  <div class="dock">
+    <button onclick="scanProduct()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Сканировать</button>
+    ${n?`<button onclick="openCart()" style="background:var(--accent)"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.5 9h-11z"/><path d="M8 8a4 4 0 018 0"/></svg>Корзина · ${n}</button>`:`<button onclick="catPicker()"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Все товары</button>`}
+  </div>`;
+}
+function cartStep(pid,d){const q=Math.max(0,(CART[pid]||0)+d);if(q)CART[pid]=q;else delete CART[pid];vCatalog();}
+function catPicker(){
+  const cats=L('categories').filter(c=>!((me().restrictCats||[]).includes(c.id)));
+  openM(`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><h2 style="margin:0">Категория</h2><span onclick="closeM()" style="font-size:22px;color:var(--muted)">✕</span></div>
+    <div class="row" onclick="KCAT='all';closeM();vCatalog()" style="cursor:pointer"><span style="font-size:16px">Все товары</span>${KCAT==='all'?'<span style="color:var(--accent);font-size:20px">●</span>':'<span style="color:#D5DBE5;font-size:20px">○</span>'}</div>
+    ${cats.map(c=>`<div class="row" onclick="KCAT='${c.id}';closeM();vCatalog()" style="cursor:pointer"><span style="font-size:16px">${esc(c.name)}</span>${KCAT===c.id?'<span style="color:var(--accent);font-size:20px">●</span>':'<span style="color:#D5DBE5;font-size:20px">○</span>'}</div>`).join('')}`);
+}
+function scanProduct(){
+  openM(`<h2>Сканировать товар</h2>
+    <div class="field"><label>Введите штрихкод / артикул</label><input id="sc_code" placeholder="например 4067" autofocus></div>
+    <div class="hint" style="margin-bottom:12px">Введите код товара или его часть — найдём в каталоге.</div>
+    <button class="btn primary" onclick="scanFind()">Найти</button>`);
+  setTimeout(()=>$('#sc_code')?.focus(),100);
+}
+function scanFind(){const code=($('#sc_code')?.value||'').trim().toLowerCase();if(!code)return;
+  const p=L('products').find(x=>(x.barcode&&String(x.barcode).includes(code))||(x.sku&&String(x.sku).toLowerCase().includes(code))||(x.name||'').toLowerCase().includes(code));
+  if(!p){toast('Товар не найден');return;}
+  cartStep(p.id,1);closeM();toast('Добавлено: '+p.name);}
+function orderFor(cid){ORDCLI=cid;go('catalog');toast(T('client')+': '+(cli(cid)?.name||''));}
+function openCart(){
+  const items=Object.entries(CART).map(([pid,q])=>({p:pid,q,price:prod(pid)?.price||0}));
+  if(!items.length){toast(T('cart')+' 0');return;}
+  const total=items.reduce((s,i)=>s+i.q*i.price,0);
+  const cons=RULES().consignment||{};
+  const canCons=(cons.enabled!==false)||excl('consignment');
+  const cls=myClients();
+  openM(`<h2>${T('doOrder')}</h2>
+    <div class="field"><label>${T('client')} *</label><select id="oc">${cls.map(c=>`<option value="${c.id}" ${ORDCLI===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
+    <div class="card">${items.map(i=>`<div class="row"><span>${esc(prod(i.p)?.name||'')} × ${i.q}</span><b>${money(i.q*i.price)}</b></div>`).join('')}
+      <div class="row"><b>${T('total')}</b><b style="color:var(--green)">${money(total)}</b></div></div>
+    <div class="field"><label>${T('payment')}</label><select id="om" onchange="document.getElementById('consrow').style.display=this.value==='consign'?'block':'none'">
+      <option value="cash">${T('cash')}</option><option value="terminal">${T('terminal')}</option><option value="transfer">${T('transfer')}</option>
+      ${canCons?`<option value="consign">${T('consign')}</option>`:''}</select></div>
+    <div id="consrow" style="display:none">
+      <div class="field"><label>${T('consignDays')} (max ${cons.maxDays||10})</label><input id="ocd" type="number" value="${cons.maxDays||10}"></div>
+      ${cons.requireComment?`<div class="field"><label>${T('consignComment')}</label><input id="occ"></div>`:''}
+    </div>
+    <button class="btn primary" onclick="sendOrder(${total})">${T('send')}</button>`);
+}
+function sendOrder(total){
+  const cid=$('#oc').value;if(!cid){toast(T('client')+' *');return;}
+  const m=$('#om').value;const cons=RULES().consignment||{};
+  let consignTerm=null,note='';
+  if(m==='consign'){
+    consignTerm=Math.floor(+($('#ocd')?.value)||0);
+    const maxD=cons.maxDays||10;
+    if(consignTerm<1||((consignTerm>maxD)&&!excl('consignment'))){toast(T('consignDays')+' ≤ '+maxD);return;}
+    if(cons.requireComment){note=($('#occ')?.value||'').trim();if(!note){toast(T('consignComment'));return;}}
+  }
+  const items=Object.entries(CART).map(([pid,q])=>({p:pid,q,price:prod(pid)?.price||0}));
+  const p={id:uid('o'),number:'MB-'+Date.now().toString().slice(-6),client:cid,agent:me().id,
+    terr:cli(cid)?.terr||'',route:cli(cid)?.route||'',date:today(),createdAt:now(),status:'new',
+    method:m==='consign'?'debt':m,payType:m==='consign'?'consignment':'onsite',consignTerm,consignNote:note,
+    items,total,paid:0,deliveryMethod:'delivery',source:'mobile'};
+  txSend('order',p);
+  if(VISIT&&VISIT.client===cid)VISIT.actions.push('order');
+  CART={};ORDCLI=null;closeM();go('dash');
+}
+
+/* ---------- ВОЗВРАТ ---------- */
+function retFor(cid){
+  const ords=[...(DATA.orders||[]).filter(o=>o.client===cid&&o.agent===me().id),...myOrders().map(t=>t.payload).filter(o=>o.client===cid)]
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,20);
+  const byOrder=ruleOn('returnByOrder');
+  const rd=RULES().returnDays||{};const maxD=rd.maxDays||8;
+  openM(`<h2>${T('ret')} — ${esc(cli(cid)?.name||'')}</h2>
+    <div class="field"><label>${T('retType')}</label><select id="rt"><option value="shelf">${T('shelf')}</option><option value="exchange">${T('exch')}</option><option value="expired">${T('expired')}</option></select></div>
+    ${byOrder?`<div class="field"><label>${T('byOrder')} *</label><select id="ro">${ords.length?ords.map(o=>{
+      const old=rd.enabled&&!excl('returnDays')&&o.date<addDays(today(),-(maxD-1));
+      return `<option value="${o.id}|${o.date}" ${old?'disabled':''}>${o.number||o.id} · ${o.date}${old?' · >'+maxD+' дн':''}</option>`}).join(''):`<option value="">${T('pickOrder')} —</option>`}</select></div>`:''}
+    <div id="ritems">${L('products').filter(allowedProd).slice(0,80).map(p=>`<div class="row"><span>${esc(p.name)}<div class="hint">${money(p.price)}</div></span>
+      <input class="qty" type="number" min="0" placeholder="0" data-rp="${p.id}"></div>`).join('')}</div>
+    <button class="btn primary" style="margin-top:10px" onclick="sendReturn('${cid}',${byOrder})">${T('send')}</button>`);
+}
+function sendReturn(cid,byOrder){
+  const items=[...document.querySelectorAll('[data-rp]')].map(e=>({p:e.dataset.rp,q:Math.floor(+e.value||0)})).filter(i=>i.q>0);
+  if(!items.length){toast('0');return;}
+  let orderId='',orderDate='';
+  if(byOrder){const ro=$('#ro');if(!ro||!ro.value){toast(T('pickOrder'));return;}[orderId,orderDate]=ro.value.split('|');}
+  const amount=items.reduce((s,i)=>s+i.q*(prod(i.p)?.price||0),0);
+  const p={id:uid('r'),client:cid,agent:me().id,date:today(),at:now(),type:$('#rt').value,items,amount,orderId,orderDate,source:'mobile'};
+  txSend('return',p);
+  if(VISIT&&VISIT.client===cid)VISIT.actions.push('return');
+  closeM();
+}
+
+/* ---------- ОТГРУЗКИ ---------- */
+let SHTAB='ships',SHDET=false;
+function vShips(){
+  $('#page').innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;margin:4px 0 14px">
+    <span style="font-size:16px;font-weight:700;color:var(--navy)">Детали</span>
+    <div onclick="SHDET=!SHDET;vShips()" style="width:50px;height:28px;border-radius:99px;background:${SHDET?'var(--accent)':'#D5DBE5'};position:relative;cursor:pointer;transition:background .15s"><div style="position:absolute;top:3px;left:${SHDET?'25px':'3px'};width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s"></div></div>
+  </div>
+  <div id="shbody"></div>
+  <div class="dock" style="background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px 4px;box-shadow:0 6px 20px rgba(28,37,54,.12)">
+    ${[['ships','Отгрузки','<path d="M6 2h9l5 5v15H6z"/><path d="M9 12h6M9 16h6"/>'],
+       ['orders','Заказы','<path d="M5 8h14l-1.5 9h-11z"/><path d="M8 8a4 4 0 018 0"/>'],
+       ['returns','Возвраты','<path d="M4 9h13l-3-3M20 15H7l3 3"/>'],
+       ['stock','Остаток','<rect x="4" y="7" width="16" height="13" rx="1"/><path d="M4 7l2-4h12l2 4"/>']].map(([v,l,ic])=>
+      `<button onclick="SHTAB='${v}';vShips()" style="background:${SHTAB===v?'#EEF1F8':'none'};color:var(--navy);box-shadow:none;flex-direction:column;gap:3px;font-size:11px;padding:8px 14px;border-radius:14px"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.7" style="width:21px;height:21px">${ic}</svg>${l}</button>`).join('')}
+  </div>`;
+  shRender();
+}
+function shEmpty(txt){return `<div style="text-align:center;padding:60px 20px">
+  <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#D5DBE5" stroke-width="1.2" style="margin:0 auto"><rect x="4" y="3" width="12" height="16" rx="1.5"/><path d="M7 7h6M7 10h6M7 13h3"/><circle cx="16" cy="16" r="4"/><path d="M19 19l2.5 2.5"/></svg>
+  <div style="color:var(--muted);margin-top:14px;font-size:14px">${txt}</div></div>`;}
+function shRender(){
+  const m=me();const body=$('#shbody');if(!body)return;
+  if(SHTAB==='ships'){
+    const sh=(DATA.shipments||[]).filter(s=>!s.courier||s.courier===m.id||['supervisor','manager','admin','operator'].includes(m.role));
+    const ords=DATA.orders||[];
+    body.innerHTML=sh.length?sh.slice().reverse().map(s=>{
+      const os=(s.orders||[]).map(id=>ords.find(o=>o.id===id)).filter(Boolean);
+      const del=os.filter(o=>o.status==='delivered').length;const sum=os.reduce((a,o)=>a+o.total,0);
+      return `<div class="card"><div class="row" style="border:none;padding:0 0 8px"><b>${esc(s.number)}</b><span class="pill blue">${os.length} зак.</span></div>
+        <div class="hint">${String(s.date||'').split('T')[0]} · 🚚 ${esc(s.transport||'')} · ${money(sum)}</div>
+        ${SHDET?`<div style="margin-top:8px">${os.map(o=>{const c=cli(o.client);const op=o.status==='delivered'?'green':o.status==='canceled'?'red':'amber';
+          return `<div class="row"><span>${esc(o.number)} ${esc(c?.name||'')}</span><span class="pill ${op}">${o.status==='delivered'?'Доставлен':o.status==='canceled'?'Отменён':'Ожидает'}</span></div>`}).join('')}</div>`
+          :`<div style="margin-top:7px"><span class="pill green">Доставлено: ${del}</span> <span class="pill gray">Ожидает: ${os.length-del}</span></div>`}
+      </div>`}).join(''):shEmpty('Отгрузок пока нет');
+  } else if(SHTAB==='orders'){
+    const list=myOrders().map(t=>t.payload);
+    body.innerHTML=list.length?list.map(o=>`<div class="card"><div class="row" style="border:none;padding:0"><div><b>${esc(o.number)}</b> · ${esc(cli(o.client)?.name||'')}
+      <div class="hint">${String(o.date||'').split('T')[0]} · ${(o.items||[]).length} поз.</div></div><b>${money(o.total)}</b></div>
+      ${SHDET?`<div style="margin-top:8px">${(o.items||[]).map(i=>`<div class="row"><span>${esc(prod(i.p)?.name||'')}</span><b>${i.q} шт</b></div>`).join('')}</div>`:''}</div>`).join(''):shEmpty('Заказов нет');
+  } else if(SHTAB==='returns'){
+    const rets=MYTX.filter(t=>t.type==='return').map(t=>t.payload);
+    body.innerHTML=rets.length?rets.map(r=>`<div class="card"><div class="row" style="border:none;padding:0"><div><b>${esc(cli(r.client)?.name||'')}</b>
+      <div class="hint">${String(r.date||'').split('T')[0]} · ${r.type==='expired'?'Просрочка':r.type==='shelf'?'С полки':'Обмен'}</div></div><b style="color:var(--red)">${money(r.amount||0)}</b></div></div>`).join(''):shEmpty('Возвратов нет');
+  } else if(SHTAB==='stock'){
+    let ps=L('products').filter(allowedProd);
+    body.innerHTML=ps.length?ps.map(p=>`<div class="ccard" style="gap:13px">
+      <div class="prodimg" ${p.photo?`style="background-image:url('${p.photo}')"`:''}></div>
+      <div style="flex:1"><b style="font-size:15px">${esc(p.name)}</b><div class="hint">${money(p.price)}</div></div>
+      <div style="text-align:right"><b style="font-size:16px;color:${(p.stock||0)>0?'var(--navy)':'var(--red)'}">${p.stock||0}</b><div class="hint">шт</div></div>
+    </div>`).join(''):shEmpty('Нет данных');
+  }
+}
+
+/* ---------- МОИ ЗАКАЗЫ / ИСТОРИЯ ---------- */
+let OFILT='all',OQ='',OMODE='orders';
+/* ============ ИНСТРУМЕНТЫ И ИГРЫ ============ */
+let TOOL=null;
+function vTools(){
+  if(TOOL==='calc')return toolCalc();
+  if(TOOL==='timer')return toolTimer();
+  if(TOOL==='chess')return chessView();
+  if(TOOL==='checkers')return checkersView();
+  if(TOOL==='weather')return toolWeather();
+  if(TOOL==='currency')return toolCurrency();
+  if(TOOL==='pedometer')return toolPedometer();
+  if(TOOL==='alarm')return toolAlarm();
+  const items=[
+    ['weather','Погода','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><path d="M17 18a4 4 0 0 0 0-8 5 5 0 0 0-9.6-1.3A3.5 3.5 0 0 0 7 18z"/><path d="M8 20l-1 2M12 20l-1 2M16 20l-1 2"/></svg>'],
+    ['currency','Курс валют','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 16h.01"/></svg>'],
+    ['pedometer','Километраж','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><path d="M13 4c1.5 0 2.5 1 2.5 3 0 1.5-.5 3-.5 4.5s1 2 1 3.5-1 3-3 3-2.5-1.5-2.5-3M8 7c-1 1-1.5 3-1 5"/></svg>'],
+    ['alarm','Будильник','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M5 3L2 6M19 3l3 3"/></svg>'],
+    ['calc','Калькулятор','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M16 15v3M8 18h6"/></svg>'],
+    ['timer','Секундомер · Таймер','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6"/></svg>'],
+    ['chess','Шахматы','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><path d="M9 20h6M10 20l1-5M14 20l-1-5M8 8l4-5 4 5-2 2H10z"/></svg>'],
+    ['checkers','Шашки','<svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><circle cx="12" cy="9" r="5"/><ellipse cx="12" cy="15" rx="5" ry="2.5"/></svg>'],
+  ];
+  $('#page').innerHTML=`
+  <div style="font-size:19px;font-weight:800;margin:2px 0 14px">Инструменты и игры</div>
+  <div class="tiles" style="grid-template-columns:1fr 1fr">
+    ${items.map(([k,l,ic])=>`<div class="tile" onclick="TOOL='${k}';vTools()">${ic}<span>${l}</span></div>`).join('')}
+  </div>`;
+}
+function toolBack(){TOOL=null;vTools();}
+
+/* ===== ПОГОДА (Open-Meteo, Ташкент) ===== */
+let WX=null;
+function toolWeather(){
+  $('#page').innerHTML=`<button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+   <div style="font-size:19px;font-weight:800;margin-bottom:14px">Погода · Ташкент</div>
+   <div id="wxbox" class="card" style="padding:20px;text-align:center">${WX?wxRender():'<div class="hint">Загрузка прогноза…</div>'}</div>`;
+  if(!WX)wxLoad();
+}
+async function wxLoad(){
+  try{
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.31&longitude=69.28&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia/Tashkent&forecast_days=3');
+    WX=await r.json();
+    const box=$('#wxbox');if(box)box.innerHTML=wxRender();
+  }catch(e){const box=$('#wxbox');if(box)box.innerHTML='<div class="hint">Нет интернета — прогноз недоступен. Проверьте связь и откройте снова.</div>';}
+}
+function wxCode(c){const m={0:['Ясно','☀️'],1:['В основном ясно','🌤'],2:['Переменная облачность','⛅'],3:['Пасмурно','☁️'],45:['Туман','🌫'],48:['Туман','🌫'],51:['Морось','🌦'],53:['Морось','🌦'],55:['Морось','🌦'],61:['Дождь','🌧'],63:['Дождь','🌧'],65:['Сильный дождь','🌧'],71:['Снег','🌨'],73:['Снег','🌨'],75:['Сильный снег','❄️'],80:['Ливень','🌧'],81:['Ливень','🌧'],82:['Сильный ливень','⛈'],95:['Гроза','⛈'],96:['Гроза с градом','⛈'],99:['Гроза с градом','⛈']};return m[c]||['—','🌡'];}
+function wxRender(){
+  if(!WX||!WX.current)return '<div class="hint">Нет данных</div>';
+  const cur=WX.current,d=WX.daily;const[txt,emo]=wxCode(cur.weather_code);
+  const rainToday=d.precipitation_probability_max?d.precipitation_probability_max[0]:0;
+  const advice=rainToday>=50?'☔ Сегодня возможен дождь — возьмите зонтик!':rainToday>=30?'🌂 Небольшая вероятность дождя — зонтик не помешает.':(cur.temperature_2m>=33?'🥵 Жарко — пейте больше воды.':'👍 Погода хорошая для работы.');
+  const days=['Сегодня','Завтра','Послезавтра'];
+  return `<div style="font-size:54px;line-height:1">${emo}</div>
+    <div style="font-size:40px;font-weight:800;margin:6px 0">${Math.round(cur.temperature_2m)}°</div>
+    <div style="font-size:15px;color:var(--muted);margin-bottom:4px">${txt}</div>
+    <div class="hint">💧 ${cur.relative_humidity_2m}% · 💨 ${Math.round(cur.wind_speed_10m)} км/ч</div>
+    <div style="background:${rainToday>=30?'#FFF4E0':'#EAF7EE'};border-radius:12px;padding:12px;margin:14px 0;font-weight:600;font-size:14px">${advice}</div>
+    <div style="display:flex;gap:8px">${d.time.slice(0,3).map((t,i)=>{const[,e]=wxCode(d.weather_code[i]);return `<div style="flex:1;background:var(--bg2,#F4EFE2);border-radius:12px;padding:10px"><div class="hint" style="font-size:11px">${days[i]}</div><div style="font-size:24px">${e}</div><div style="font-weight:700;font-size:13px">${Math.round(d.temperature_2m_max[i])}°/${Math.round(d.temperature_2m_min[i])}°</div><div class="hint" style="font-size:10px">☔${d.precipitation_probability_max[i]}%</div></div>`}).join('')}</div>
+    <button class="btn primary" style="margin-top:14px" onclick="wxNotify()">🔔 Напомнить про зонтик</button>`;
+}
+function wxNotify(){
+  const d=WX&&WX.daily;const rain=d&&d.precipitation_probability_max?d.precipitation_probability_max[0]:0;
+  const msg=rain>=30?'☔ Сегодня возможен дождь ('+rain+'%) — возьмите зонтик!':'☀️ Дождя не ожидается — зонтик не нужен.';
+  if('Notification'in window){
+    if(Notification.permission==='granted'){new Notification('HALWAA · Погода',{body:msg});toast('Уведомление отправлено');}
+    else Notification.requestPermission().then(p=>{if(p==='granted'){new Notification('HALWAA · Погода',{body:msg});toast('Уведомление включено');}else toast(msg);});
+  }else toast(msg);
+}
+
+/* ===== КУРС ВАЛЮТ (ЦБ Узбекистана) ===== */
+let CUR=null;
+function toolCurrency(){
+  $('#page').innerHTML=`<button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+   <div style="font-size:19px;font-weight:800;margin-bottom:14px">Курс валют · ЦБ РУз</div>
+   <div id="curbox">${CUR?curRender():'<div class="card" style="padding:20px;text-align:center"><div class="hint">Загрузка курсов…</div></div>'}</div>`;
+  if(!CUR)curLoad();
+}
+async function curLoad(){
+  try{
+    const r=await fetch('https://cbu.uz/ru/arkhiv-kursov-valyut/json/');
+    const all=await r.json();
+    CUR=all.filter(x=>['USD','EUR','RUB','KZT','GBP'].includes(x.Ccy));
+    const box=$('#curbox');if(box)box.innerHTML=curRender();
+  }catch(e){const box=$('#curbox');if(box)box.innerHTML='<div class="card" style="padding:20px"><div class="hint">Нет интернета — курсы недоступны. Проверьте связь.</div></div>';}
+}
+function curRender(){
+  if(!CUR||!CUR.length)return '<div class="hint">Нет данных</div>';
+  const flag={USD:'🇺🇸',EUR:'🇪🇺',RUB:'🇷🇺',KZT:'🇰🇿',GBP:'🇬🇧'};
+  const date=CUR[0].Date;
+  return `<div class="hint" style="margin-bottom:10px">На ${date} · сум за 1 единицу</div>
+   ${CUR.map(c=>{const diff=parseFloat(c.Diff||0);return `<div class="card" style="padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+     <div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">${flag[c.Ccy]||'💱'}</span><div><b>${c.Ccy}</b><div class="hint" style="font-size:11px">${esc(c.CcyNm_RU||'')}</div></div></div>
+     <div style="text-align:right"><b style="font-size:17px">${Number(c.Rate).toLocaleString('ru')}</b><div class="hint" style="font-size:11px;color:${diff>0?'var(--red)':diff<0?'var(--green)':'var(--muted)'}">${diff>0?'▲':diff<0?'▼':''} ${Math.abs(diff).toLocaleString('ru')}</div></div>
+   </div>`}).join('')}`;
+}
+
+/* ===== ШАГОМЕР (шаги / км / калории) ===== */
+let PED=null;
+function pedKey(){return 'ped_'+(SESSION&&SESSION.id||'me')+'_'+today();}
+function pedLoad(){try{return JSON.parse(localStorage.getItem(pedKey()))||{steps:0};}catch(e){return {steps:0};}}
+function pedSave(){try{localStorage.setItem(pedKey(),JSON.stringify(PED));}catch(e){}}
+function toolPedometer(){
+  // КИЛОМЕТРАЖ по GPS-треку за сегодня
+  let km=0;
+  for(let i=1;i<TRACK.length;i++){const d=distKm([TRACK[i-1].lat,TRACK[i-1].lng],[TRACK[i].lat,TRACK[i].lng]);if(d&&d<2)km+=d;} // отсекаем выбросы >2км между точками
+  const kcal=Math.round(km*55);        // ~55 ккал на км ходьбы/работы
+  const steps=Math.round(km/0.00075);  // оценка шагов из км
+  const goalKm=8,pct=Math.min(100,Math.round(km/goalKm*100));
+  const pts=TRACK.length;
+  const first=TRACK[0]?.t?TRACK[0].t.split('T')[1].slice(0,5):'—';
+  const last=TRACK[TRACK.length-1]?.t?TRACK[TRACK.length-1].t.split('T')[1].slice(0,5):'—';
+  $('#page').innerHTML=`<button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+   <div style="font-size:19px;font-weight:800;margin-bottom:14px">Километраж · сегодня</div>
+   <div class="card" style="padding:22px;text-align:center">
+     <div style="font-size:46px;font-weight:800">${km.toFixed(2)}<span style="font-size:20px;font-weight:600;color:var(--muted)"> км</span></div>
+     <div class="hint" style="margin-bottom:14px">пройдено по GPS · цель ${goalKm} км</div>
+     <div style="height:10px;background:#EEE8DA;border-radius:6px;overflow:hidden;margin-bottom:18px"><div style="height:100%;width:${pct}%;background:var(--navy);border-radius:6px"></div></div>
+     <div style="display:flex;gap:10px">
+       <div style="flex:1;background:var(--bg2,#F4EFE2);border-radius:12px;padding:14px"><div style="font-size:22px">🔥</div><b style="font-size:18px">${kcal}</b><div class="hint" style="font-size:11px">ккал</div></div>
+       <div style="flex:1;background:var(--bg2,#F4EFE2);border-radius:12px;padding:14px"><div style="font-size:22px">👟</div><b style="font-size:18px">${steps.toLocaleString('ru')}</b><div class="hint" style="font-size:11px">шагов ≈</div></div>
+       <div style="flex:1;background:var(--bg2,#F4EFE2);border-radius:12px;padding:14px"><div style="font-size:22px">🎯</div><b style="font-size:18px">${pct}%</b><div class="hint" style="font-size:11px">цель</div></div>
+     </div>
+   </div>
+   <div class="card" style="margin-top:12px;display:flex;justify-content:space-between"><span class="hint">GPS-точек: <b>${pts}</b></span><span class="hint">с ${first} по ${last}</span></div>
+   <div id="ped_status" class="hint" style="text-align:center;margin:12px 0">${GEO?'📍 GPS активен — километраж считается автоматически':'Включите геолокацию, чтобы считать километраж'}</div>
+   <button class="btn primary" onclick="toolPedometer()">🔄 Обновить</button>
+   <div class="hint" style="margin-top:12px;text-align:center;line-height:1.5">Километраж считается по вашему GPS-маршруту за день и виден супервайзеру в админ-панели на карте.</div>`;
+}
+// живое обновление цифр без перерисовки всей страницы
+function pedRefresh(){
+  if(TOOL!=='pedometer')return;
+  const km=(PED.steps*0.00075).toFixed(2),kcal=Math.round(PED.steps*0.04),pct=Math.min(100,Math.round(PED.steps/8000*100));
+  const s=$('#ped_steps');if(s)s.textContent=PED.steps.toLocaleString('ru');
+  const k=$('#ped_km');if(k)k.textContent=km;
+  const c=$('#ped_kcal');if(c)c.textContent=kcal;
+  const p=$('#ped_pct');if(p)p.textContent=pct+'%';
+  const b=$('#ped_bar');if(b)b.style.width=pct+'%';
+}
+let PED_ON=false;
+function pedAutoStart(){
+  if(PED_ON)return;
+  if(typeof DeviceMotionEvent==='undefined'){const el=$('#ped_status');if(el)el.textContent='Датчик движения недоступен на этом устройстве';return;}
+  // iOS требует разрешение по жесту — открытие шагомера это и есть жест
+  if(typeof DeviceMotionEvent.requestPermission==='function'){
+    DeviceMotionEvent.requestPermission().then(p=>{if(p==='granted'){PED_ON=true;window.addEventListener('devicemotion',pedStep);}else{const el=$('#ped_status');if(el)el.textContent='Разрешите доступ к движению в настройках браузера';}}).catch(()=>{});
+  }else{PED_ON=true;window.addEventListener('devicemotion',pedStep);}
+}
+let _pedLast=0,_pedPeak=false,_pedAvg=10,_pedBuf=[];
+function pedStep(e){
+  const a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;
+  const mag=Math.sqrt((a.x||0)**2+(a.y||0)**2+(a.z||0)**2);
+  _pedBuf.push(mag);if(_pedBuf.length>15)_pedBuf.shift();
+  _pedAvg=_pedBuf.reduce((s,v)=>s+v,0)/_pedBuf.length;
+  const now=Date.now();
+  const thr=_pedAvg+2.2;
+  if(mag>thr&&!_pedPeak&&now-_pedLast>280){
+    _pedPeak=true;_pedLast=now;PED.steps=(PED.steps||0)+1;pedSave();
+    pedRefresh();
+  }
+  if(mag<_pedAvg+0.8)_pedPeak=false;
+}
+function pedReset(){if(confirm('Сбросить счётчик шагов за сегодня?')){PED={steps:0};pedSave();toolPedometer();}}
+
+/* ===== БУДИЛЬНИК ===== */
+let ALARMS=null,_alarmTimer=null;
+function alarmKey(){return 'alarms_'+(me()&&me().id||'me');}
+function alarmLoad(){try{return JSON.parse(localStorage.getItem(alarmKey()))||[];}catch(e){return [];}}
+function alarmSave(){try{localStorage.setItem(alarmKey(),JSON.stringify(ALARMS));}catch(e){}}
+function toolAlarm(){
+  ALARMS=alarmLoad();
+  alarmEnsureTimer();
+  $('#page').innerHTML=`<button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+   <div style="font-size:19px;font-weight:800;margin-bottom:14px">⏰ Будильник</div>
+   <div class="card" style="padding:18px;margin-bottom:16px;text-align:center">
+     <input id="al_time" type="time" value="08:00" style="font-size:38px;font-weight:800;border:none;background:transparent;text-align:center;width:100%;color:var(--navy)">
+     <input id="al_label" placeholder="Подпись (напр. Выезд на маршрут)" style="width:100%;padding:12px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;margin-top:12px;text-align:center">
+     <button class="btn primary" style="margin-top:14px;font-size:16px;padding:14px" onclick="alarmAdd()">+ Поставить будильник</button>
+   </div>
+   ${ALARMS.length?`<div class="hint" style="margin-bottom:8px">Мои будильники</div>`+ALARMS.map((a,i)=>`<div class="card" style="padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
+     <div><div style="font-size:30px;font-weight:800;line-height:1;color:${a.on?'var(--navy)':'#B8B8B8'}">${a.time}</div><div class="hint" style="margin-top:2px">${esc(a.label||'Будильник')}</div></div>
+     <div style="display:flex;align-items:center;gap:14px">
+       <div onclick="alarmToggle(${i})" style="width:52px;height:30px;border-radius:16px;background:${a.on?'var(--green,#1F8A4C)':'#D5D5D5'};position:relative;cursor:pointer;transition:.2s">
+         <div style="width:24px;height:24px;border-radius:50%;background:#fff;position:absolute;top:3px;left:${a.on?'25px':'3px'};transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div></div>
+       <button onclick="alarmDel(${i})" style="background:none;border:none;font-size:20px;color:#C0392B;cursor:pointer">🗑</button>
+     </div></div>`).join(''):'<div class="hint" style="text-align:center;padding:24px">Будильников нет.<br>Поставьте время выше ☝️</div>'}
+   <div class="hint" style="margin-top:14px;text-align:center;line-height:1.5">Будильник звонит, пока приложение открыто (даже свёрнуто). Для полной надёжности используйте и системный будильник телефона.</div>`;
+}
+function alarmAdd(){const t=$('#al_time').value;if(!t){toast('Укажите время');return;}
+  ALARMS=alarmLoad();ALARMS.push({time:t,label:($('#al_label').value||'').trim(),on:true});alarmSave();
+  toast('⏰ Будильник на '+t+' поставлен');toolAlarm();}
+function alarmToggle(i){ALARMS=alarmLoad();if(ALARMS[i]){ALARMS[i].on=!ALARMS[i].on;alarmSave();}toolAlarm();}
+function alarmDel(i){ALARMS=alarmLoad();ALARMS.splice(i,1);alarmSave();toolAlarm();}
+function alarmEnsureTimer(){if(window._alarmIv)return;window._alarmIv=setInterval(alarmCheck,15000);}
+function alarmCheck(){
+  let list=alarmLoad();if(!list.length)return;
+  const now=new Date();const hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  let changed=false;
+  list.forEach(a=>{if(a.on&&a.time===hm&&a._fired!==today()+hm){a._fired=today()+hm;changed=true;
+    try{if(typeof Notification!=='undefined'&&Notification.permission==='granted')new Notification('⏰ '+(a.label||'Будильник'),{body:'Время: '+a.time});}catch(e){}
+    toast('⏰ '+(a.label||'Будильник')+' · '+a.time);
+    if(navigator.vibrate)navigator.vibrate([500,250,500,250,500]);
+  }});
+  if(changed){ALARMS=list;try{localStorage.setItem(alarmKey(),JSON.stringify(list));}catch(e){}}
+}
+/* --- Калькулятор --- */
+let CALC={s:'0'};
+function toolCalc(){
+  $('#page').innerHTML=`
+  <button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+  <div class="card" style="text-align:right;font-size:34px;font-weight:700;color:var(--navy);padding:24px 18px;min-height:80px;word-break:break-all">${esc(CALC.s)}</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    ${['C','⌫','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','='].map(k=>{
+      const wide=k==='0'?'grid-column:span 2':'';
+      const op=['÷','×','−','+','='].includes(k);const fn=['C','⌫','%'].includes(k);
+      return `<button onclick="calcKey('${k}')" style="${wide};padding:20px 0;border:none;border-radius:14px;font-size:22px;font-weight:700;background:${op?'var(--accent)':fn?'#E4E8EF':'#fff'};color:${op?'#fff':'var(--navy)'};border:1px solid var(--line)">${k}</button>`;
+    }).join('')}
+  </div>`;
+}
+function calcKey(k){
+  let s=CALC.s;
+  const norm=x=>x.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');
+  if(k==='C')s='0';
+  else if(k==='⌫')s=s.length>1?s.slice(0,-1):'0';
+  else if(k==='='){try{let r=Function('return '+norm(s))();r=Math.round(r*1e6)/1e6;s=String(r);}catch(e){s='Ошибка';}}
+  else if(k==='%'){try{s=String(Function('return '+norm(s))()/100);}catch(e){}}
+  else if(['÷','×','−','+'].includes(k)){if(/[+\-×÷]$/.test(s))s=s.slice(0,-1)+k;else s+=k;}
+  else{if(s==='0'&&k!=='.')s=k;else if(s==='Ошибка')s=k;else s+=k;}
+  CALC.s=s;toolCalc();
+}
+/* --- Секундомер + Таймер --- */
+let SW={t0:0,acc:0,run:false,iv:null,mode:'sw',timerLeft:0};
+function toolTimer(){
+  $('#page').innerHTML=`
+  <button class="btn ghost sm" style="width:auto;margin-bottom:12px" onclick="toolBack()">← Назад</button>
+  <div class="seg"><button class="${SW.mode==='sw'?'on':''}" onclick="swMode('sw')">Секундомер</button><button class="${SW.mode==='tm'?'on':''}" onclick="swMode('tm')">Таймер</button></div>
+  <div class="card" style="text-align:center;padding:34px 18px">
+    <div id="sw_disp" style="font-size:46px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums">${swFmt(SW.mode==='sw'?swElapsed():SW.timerLeft)}</div>
+  </div>
+  ${SW.mode==='tm'&&!SW.run?`<div style="display:flex;gap:8px;margin-bottom:12px">${[1,3,5,10,15,30].map(m=>`<button class="btn ghost sm" onclick="SW.timerLeft=${m*60}*1000;toolTimer()">${m} мин</button>`).join('')}</div>`:''}
+  <div style="display:flex;gap:10px">
+    <button class="btn primary" onclick="swToggle()">${SW.run?'Пауза':'Старт'}</button>
+    <button class="btn ghost" onclick="swReset()">Сброс</button>
+  </div>`;
+}
+function swMode(m){swReset();SW.mode=m;toolTimer();}
+function swElapsed(){return SW.acc+(SW.run?Date.now()-SW.t0:0);}
+function swFmt(ms){ms=Math.max(0,ms);const t=Math.floor(ms/1000);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=t%60,cs=Math.floor(ms%1000/10);
+  return (h?String(h).padStart(2,'0')+':':'')+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+(SW.mode==='sw'?'.'+String(cs).padStart(2,'0'):'');}
+function swToggle(){
+  if(SW.run){SW.run=false;if(SW.mode==='sw')SW.acc=swElapsed();clearInterval(SW.iv);toolTimer();return;}
+  SW.run=true;SW.t0=Date.now();
+  clearInterval(SW.iv);
+  SW.iv=setInterval(()=>{const d=document.getElementById('sw_disp');if(!d){clearInterval(SW.iv);return;}
+    if(SW.mode==='sw'){d.textContent=swFmt(swElapsed());}
+    else{const left=SW.timerLeft-(Date.now()-SW.t0);if(left<=0){clearInterval(SW.iv);SW.run=false;SW.timerLeft=0;d.textContent=swFmt(0);toast('⏰ Время вышло!');try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}}else d.textContent=swFmt(left);}
+  },SW.mode==='sw'?50:200);
+  toolTimer();
+}
+function swReset(){SW.run=false;SW.acc=0;SW.t0=0;clearInterval(SW.iv);if(SW.mode==='tm')SW.timerLeft=0;const d=document.getElementById('sw_disp');if(d)d.textContent=swFmt(SW.mode==='sw'?0:SW.timerLeft);}
+/* --- ШАШКИ (русские) с ИИ minimax, 4 уровня --- */
+let CK=null;
+function checkersView(){
+  if(!CK)CK={board:ckInit(),turn:1,sel:null,level:2,moves:[],over:null};
+  const lv=['Лёгкий','Средний','Сложный','Эксперт'];
+  $('#page').innerHTML=`
+  <button class="btn ghost sm" style="width:auto;margin-bottom:10px" onclick="TOOL=null;CK=null;vTools()">← Назад</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <b style="font-size:17px">Шашки</b>
+    <select onchange="CK.level=+this.value" style="padding:8px 12px;border:1.5px solid var(--line);border-radius:10px">${lv.map((l,i)=>`<option value="${i}" ${CK.level===i?'selected':''}>${l}</option>`).join('')}</select>
+  </div>
+  <div class="hint" style="margin-bottom:8px">${CK.over?(CK.over==='you'?'🏆 Вы выиграли!':CK.over==='ai'?'🤖 Компьютер выиграл':'Ничья'):(CK.turn===1?'Ваш ход (белые ●)':'Ход компьютера…')}</div>
+  <div style="display:grid;grid-template-columns:repeat(8,1fr);width:100%;max-width:380px;margin:0 auto;border:2px solid var(--navy);border-radius:6px;overflow:hidden">
+    ${ckRender()}
+  </div>
+  <button class="btn ghost" style="margin-top:14px" onclick="CK={board:ckInit(),turn:1,sel:null,level:CK.level,moves:[],over:null};checkersView()">Новая игра</button>`;
+}
+function ckInit(){const b=Array(64).fill(0);for(let i=0;i<64;i++){const r=Math.floor(i/8),c=i%8;if((r+c)%2){if(r<3)b[i]=-1;else if(r>4)b[i]=1;}}return b;}
+function ckRender(){
+  const legal=CK.turn===1&&!CK.over?ckMoves(CK.board,1):[];
+  const selMoves=CK.sel!=null?legal.filter(m=>m.from===CK.sel):[];
+  let h='';
+  for(let i=0;i<64;i++){const r=Math.floor(i/8),c=i%8;const dark=(r+c)%2;
+    const pc=CK.board[i];const canTo=selMoves.some(m=>m.to===i);
+    const isSel=CK.sel===i;
+    h+=`<div onclick="ckTap(${i})" style="aspect-ratio:1;background:${isSel?'#9DBBE8':canTo?'#BFE6D2':dark?'#3A4A66':'#E8ECF2'};display:grid;place-items:center;cursor:${dark?'pointer':'default'};position:relative">
+      ${pc?`<div style="width:72%;height:72%;border-radius:50%;background:${pc>0?'radial-gradient(circle at 35% 30%,#fff,#D5D9E0)':'radial-gradient(circle at 35% 30%,#5A6478,#1C2536)'};border:2px solid ${pc>0?'#B5BCC8':'#0E1422'};display:grid;place-items:center;color:${pc>0?'#C9A227':'#C9A227'};font-size:13px;font-weight:800">${Math.abs(pc)===2?'★':''}</div>`:''}
+      ${canTo?'<div style="position:absolute;width:24%;height:24%;border-radius:50%;background:rgba(30,158,106,.6)"></div>':''}
+    </div>`;}
+  return h;
+}
+function ckTap(i){
+  if(CK.over||CK.turn!==1)return;
+  const legal=ckMoves(CK.board,1);
+  if(CK.sel!=null){
+    const mv=legal.find(m=>m.from===CK.sel&&m.to===i);
+    if(mv){ckApply(CK.board,mv);CK.sel=null;
+      // если есть продолжение взятия тем же — упрощённо: завершаем ход
+      CK.turn=-1;checkersView();
+      setTimeout(ckAI,350);return;}
+    CK.sel=(CK.board[i]>0)?i:null;checkersView();return;
+  }
+  if(CK.board[i]>0&&legal.some(m=>m.from===i)){CK.sel=i;checkersView();}
+}
+function ckMoves(b,side){
+  const caps=[],simple=[];
+  for(let i=0;i<64;i++){if(Math.sign(b[i])!==side)continue;const r=Math.floor(i/8),c=i%8;const king=Math.abs(b[i])===2;
+    const dirs=[[-1,-1],[-1,1],[1,-1],[1,1]];
+    dirs.forEach(([dr,dc])=>{
+      if(king){
+        let rr=r+dr,cc=c+dc,seenEnemy=-1;
+        while(rr>=0&&rr<8&&cc>=0&&cc<8){const j=rr*8+cc;
+          if(b[j]===0){if(seenEnemy>=0)caps.push({from:i,to:j,cap:seenEnemy});}
+          else if(Math.sign(b[j])===side)break;
+          else{if(seenEnemy>=0)break;seenEnemy=j;}
+          rr+=dr;cc+=dc;}
+      }else{
+        const fr=r+dr,fc=c+dc;if(fr<0||fr>7||fc<0||fc>7)return;const j=fr*8+fc;
+        if(b[j]===0){if(dr===(side>0?-1:1))simple.push({from:i,to:j});}
+        else if(Math.sign(b[j])!==side){const jr=fr+dr,jc=fc+dc;if(jr<0||jr>7||jc<0||jc>7)return;const k=jr*8+jc;if(b[k]===0)caps.push({from:i,to:k,cap:j});}
+      }
+    });
+  }
+  return caps.length?caps:simple;  // взятие обязательно
+}
+function ckApply(b,m){b[m.to]=b[m.from];b[m.from]=0;if(m.cap!=null)b[m.cap]=0;
+  const r=Math.floor(m.to/8);if(b[m.to]===1&&r===0)b[m.to]=2;if(b[m.to]===-1&&r===7)b[m.to]=-2;}
+function ckEval(b){let s=0;for(let i=0;i<64;i++){if(b[i]===1)s-=10+(7-Math.floor(i/8));else if(b[i]===-1)s+=10+Math.floor(i/8);else if(b[i]===2)s-=25;else if(b[i]===-2)s+=25;}return s;}
+function ckMinimax(b,side,depth,a,bt){
+  const mv=ckMoves(b,side);
+  if(depth===0||!mv.length)return ckEval(b)+(mv.length?0:(side>0?-1000:1000));
+  if(side<0){let best=-1e9;for(const m of mv){const nb=b.slice();ckApply(nb,m);best=Math.max(best,ckMinimax(nb,1,depth-1,a,bt));a=Math.max(a,best);if(bt<=a)break;}return best;}
+  else{let best=1e9;for(const m of mv){const nb=b.slice();ckApply(nb,m);best=Math.min(best,ckMinimax(nb,-1,depth-1,a,bt));bt=Math.min(bt,best);if(bt<=a)break;}return best;}
+}
+function ckAI(){
+  if(CK.over)return;
+  const mv=ckMoves(CK.board,-1);
+  if(!mv.length){CK.over='you';checkersView();return;}
+  const depth=[1,2,4,6][CK.level];
+  let best=null,bv=-1e9;
+  for(const m of mv){const nb=CK.board.slice();ckApply(nb,m);const v=ckMinimax(nb,1,depth-1,-1e9,1e9);if(v>bv){bv=v;best=m;}}
+  ckApply(CK.board,best);
+  if(!ckMoves(CK.board,1).length)CK.over='ai';
+  else if(!CK.board.some(x=>x>0))CK.over='ai';
+  else if(!CK.board.some(x=>x<0))CK.over='you';
+  CK.turn=1;checkersView();
+}
+/* --- ШАХМАТЫ с ИИ minimax, 4 уровня --- */
+let CH=null;
+const CH_GLYPH={'P':'♙','N':'♘','B':'♗','R':'♖','Q':'♕','K':'♔','p':'♟','n':'♞','b':'♝','r':'♜','q':'♛','k':'♚'};
+function chessView(){
+  if(!CH)CH={b:chInit(),turn:'w',sel:null,level:1,over:null,think:false};
+  const lv=['Лёгкий','Средний','Сложный','Эксперт'];
+  const legal=CH.turn==='w'&&!CH.over?chLegal(CH.b,'w'):[];
+  const selMoves=CH.sel!=null?legal.filter(m=>m.from===CH.sel):[];
+  $('#page').innerHTML=`
+  <button class="btn ghost sm" style="width:auto;margin-bottom:10px" onclick="TOOL=null;CH=null;vTools()">← Назад</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <b style="font-size:17px">Шахматы</b>
+    <select onchange="CH.level=+this.value" style="padding:8px 12px;border:1.5px solid var(--line);border-radius:10px">${lv.map((l,i)=>`<option value="${i}" ${CH.level===i?'selected':''}>${l}</option>`).join('')}</select>
+  </div>
+  <div class="hint" style="margin-bottom:8px">${CH.over?(CH.over==='w'?'🏆 Мат! Вы выиграли':CH.over==='b'?'🤖 Мат. Компьютер выиграл':'Пат · ничья'):(CH.think?'🤖 Компьютер думает…':CH.turn==='w'?'Ваш ход (белые)':'…')}</div>
+  <div style="display:grid;grid-template-columns:repeat(8,1fr);width:100%;max-width:380px;margin:0 auto;border:2px solid var(--navy);border-radius:6px;overflow:hidden">
+    ${CH.b.map((pc,i)=>{const r=Math.floor(i/8),c=i%8;const dark=(r+c)%2;
+      const canTo=selMoves.some(m=>m.to===i);const isSel=CH.sel===i;
+      return `<div onclick="chTap(${i})" style="aspect-ratio:1;background:${isSel?'#9DBBE8':canTo?'#BFE6D2':dark?'#7C8AA5':'#E8ECF2'};display:grid;place-items:center;cursor:pointer;font-size:26px;line-height:1;position:relative">
+        <span style="color:${pc&&pc===pc.toUpperCase()?'#fff':'#1C2536'};text-shadow:${pc&&pc===pc.toUpperCase()?'0 1px 2px rgba(0,0,0,.4)':'none'}">${pc?CH_GLYPH[pc]:''}</span>
+        ${canTo?'<div style="position:absolute;width:22%;height:22%;border-radius:50%;background:rgba(30,158,106,.6)"></div>':''}</div>`;}).join('')}
+  </div>
+  <button class="btn ghost" style="margin-top:14px" onclick="CH={b:chInit(),turn:'w',sel:null,level:CH.level,over:null,think:false};chessView()">Новая игра</button>`;
+}
+function chInit(){return ['r','n','b','q','k','b','n','r','p','p','p','p','p','p','p','p',...Array(32).fill(''),'P','P','P','P','P','P','P','P','R','N','B','Q','K','B','N','R'];}
+function chWhite(p){return p&&p===p.toUpperCase();}
+function chSide(p){return p?(chWhite(p)?'w':'b'):null;}
+function chTap(i){
+  if(CH.over||CH.turn!=='w'||CH.think)return;
+  const legal=chLegal(CH.b,'w');
+  if(CH.sel!=null){
+    const mv=legal.find(m=>m.from===CH.sel&&m.to===i);
+    if(mv){chApply(CH.b,mv);CH.sel=null;CH.turn='b';CH.think=true;chessView();setTimeout(chAI,300);return;}
+    CH.sel=(chSide(CH.b[i])==='w')?i:null;chessView();return;
+  }
+  if(chSide(CH.b[i])==='w'&&legal.some(m=>m.from===i)){CH.sel=i;chessView();}
+}
+const CH_DIR={N:[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]],K:[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]],
+  B:[[-1,-1],[-1,1],[1,-1],[1,1]],R:[[-1,0],[1,0],[0,-1],[0,1]]};
+function chPseudo(b,side){
+  const mv=[];const fwd=side==='w'?-1:1;
+  for(let i=0;i<64;i++){const p=b[i];if(!p||chSide(p)!==side)continue;const r=Math.floor(i/8),c=i%8;const t=p.toUpperCase();
+    const add=(rr,cc,cap)=>{if(rr<0||rr>7||cc<0||cc>7)return false;const j=rr*8+cc;const tp=b[j];
+      if(tp){if(chSide(tp)!==side&&cap!==false)mv.push({from:i,to:j});return false;}if(cap!=='only')mv.push({from:i,to:j});return true;};
+    if(t==='P'){const r1=r+fwd;if(r1>=0&&r1<8&&!b[r1*8+c]){mv.push({from:i,to:r1*8+c});
+        const start=side==='w'?6:1;if(r===start&&!b[(r+2*fwd)*8+c])mv.push({from:i,to:(r+2*fwd)*8+c});}
+      [[fwd,-1],[fwd,1]].forEach(([dr,dc])=>{const rr=r+dr,cc=c+dc;if(rr<0||rr>7||cc<0||cc>7)return;const j=rr*8+cc;if(b[j]&&chSide(b[j])!==side)mv.push({from:i,to:j});});}
+    else if(t==='N'||t==='K'){CH_DIR[t].forEach(([dr,dc])=>add(r+dr,c+dc));}
+    else{const dirs=t==='Q'?[...CH_DIR.B,...CH_DIR.R]:t==='B'?CH_DIR.B:CH_DIR.R;
+      dirs.forEach(([dr,dc])=>{let rr=r+dr,cc=c+dc;while(add(rr,cc)){rr+=dr;cc+=dc;}});}
+  }
+  return mv;
+}
+function chApply(b,m){const p=b[m.from];b[m.to]=p;b[m.from]='';
+  const r=Math.floor(m.to/8);if(p==='P'&&r===0)b[m.to]='Q';if(p==='p'&&r===7)b[m.to]='q';}
+function chKing(b,side){const k=side==='w'?'K':'k';return b.indexOf(k);}
+function chAttacked(b,sq,bySide){return chPseudo(b,bySide).some(m=>m.to===sq);}
+function chLegal(b,side){
+  return chPseudo(b,side).filter(m=>{const nb=b.slice();chApply(nb,m);const ks=chKing(nb,side);return ks<0||!chAttacked(nb,ks,side==='w'?'b':'w');});
+}
+const CH_VAL={P:100,N:320,B:330,R:500,Q:900,K:20000};
+function chEval(b){let s=0;for(let i=0;i<64;i++){const p=b[i];if(!p)continue;const v=CH_VAL[p.toUpperCase()];s+=chWhite(p)?-v:v;}return s;}
+function chMinimax(b,side,depth,a,bt){
+  const legal=chLegal(b,side);
+  if(!legal.length){const ks=chKing(b,side);if(ks>=0&&chAttacked(b,ks,side==='w'?'b':'w'))return side==='w'?99999:-99999;return 0;}
+  if(depth===0)return chEval(b);
+  if(side==='b'){let best=-1e9;for(const m of legal){const nb=b.slice();chApply(nb,m);best=Math.max(best,chMinimax(nb,'w',depth-1,a,bt));a=Math.max(a,best);if(bt<=a)break;}return best;}
+  else{let best=1e9;for(const m of legal){const nb=b.slice();chApply(nb,m);best=Math.min(best,chMinimax(nb,'b',depth-1,a,bt));bt=Math.min(bt,best);if(bt<=a)break;}return best;}
+}
+function chAI(){
+  const legal=chLegal(CH.b,'b');
+  if(!legal.length){const ks=chKing(CH.b,'b');CH.over=(ks>=0&&chAttacked(CH.b,ks,'w'))?'w':'draw';CH.think=false;chessView();return;}
+  const depth=[1,2,3,3][CH.level];
+  let best=null,bv=-1e9;
+  // лёгкий уровень — иногда случайный ход
+  if(CH.level===0&&Math.random()<0.4)best=legal[Math.floor(Math.random()*legal.length)];
+  else for(const m of legal){const nb=CH.b.slice();chApply(nb,m);const v=chMinimax(nb,'w',depth-1,-1e9,1e9);if(v>bv){bv=v;best=m;}}
+  chApply(CH.b,best);CH.turn='w';CH.think=false;
+  if(!chLegal(CH.b,'w').length){const ks=chKing(CH.b,'w');CH.over=(ks>=0&&chAttacked(CH.b,ks,'b'))?'b':'draw';}
+  chessView();
+}
+let PQ='';
+function vLearn(){
+  const prods=L('products').filter(p=>p.video&&allowedProd(p));
+  $('#page').innerHTML=`
+  <div style="font-size:19px;font-weight:800;margin:2px 0 14px">Видео о товарах</div>
+  ${prods.length?prods.map(p=>{
+    const yt=ytId(p.video);
+    return `<div class="card" style="padding:0;overflow:hidden">
+      ${yt?`<div style="position:relative;padding-bottom:56%;height:0"><iframe src="https://www.youtube.com/embed/${yt}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen></iframe></div>`
+        :`<video src="${esc(p.video)}" controls playsinline style="width:100%;display:block;max-height:240px;background:#000" onloadedmetadata="this.dataset.lim=Math.min(15,this.duration)" ontimeupdate="if(this.currentTime>15){this.pause();this.currentTime=0;}"></video>`}
+      <div style="padding:13px;display:flex;align-items:center;gap:12px">
+        <div class="prodimg" ${p.photo?`style="background-image:url('${p.photo}')"`:''}></div>
+        <div style="flex:1"><b style="font-size:15px;color:var(--navy)">${esc(p.name)}</b><div class="hint">${money(p.price)} · ${esc(cat(p.cat)?.name||'')}</div></div>
+      </div>
+    </div>`}).join('')
+  :`<div class="card"><div class="empty">Видео о товарах пока нет.<br>Администратор добавляет их в карточке товара (Настройки → Товар и цена → Видео о товаре).</div></div>`}`;
+}
+function ytId(url){if(!url)return null;const m=String(url).match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);return m?m[1]:null;}
+function vPrice(){
+  let ps=L('products').filter(allowedProd);
+  if(PQ){const q=PQ.toLowerCase();ps=ps.filter(p=>(p.name||'').toLowerCase().includes(q));}
+  ps.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  $('#page').innerHTML=`
+  <div class="search">
+    <button class="btn sm ghost" style="padding:0 12px" onclick="toast('Сканер откроется в заказе')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></button>
+    <input placeholder="Поиск товаров…" value="${esc(PQ)}" oninput="PQ=this.value;vPrice()">
+    <button class="btn sm ghost" style="padding:0 12px" onclick="go('catalog')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16M7 12h10M10 18h4"/></svg></button>
+  </div>
+  ${ps.map(p=>`<div class="ccard" style="gap:14px">
+    <div class="prodimg" ${p.photo?`style="background-image:url('${p.photo}')"`:''}></div>
+    <div style="flex:1;min-width:0"><b style="font-size:16px;color:var(--navy)">${esc(p.name)}</b>
+      <div style="font-size:15px;margin-top:4px;color:var(--ink)">${money(p.price)}</div></div>
+  </div>`).join('')||`<div class="empty">${T('noData')}</div>`}
+  <div class="dock">
+    <button onclick="go('catalog')"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.5 9h-11z"/><path d="M8 8a4 4 0 018 0"/></svg>Оформить заказ</button>
+  </div>`;
+}
+function vOrders(){
+  let list=myOrders().map(t=>t.payload);
+  // дополняем заказами из справочника (доставленные/обработанные)
+  const ids=new Set(list.map(o=>o.id));
+  (DATA.orders||[]).filter(o=>o.agent===me().id&&!ids.has(o.id)).forEach(o=>list.push(o));
+  if(OQ){const q=OQ.toLowerCase();list=list.filter(o=>(o.number||'').toLowerCase().includes(q)||(cli(o.client)?.name||'').toLowerCase().includes(q));}
+  const statusOf=o=>o.status==='delivered'?'shipped':(o.status==='shipped'?'proc':'new');
+  if(OFILT!=='all')list=list.filter(o=>statusOf(o)===OFILT);
+  list.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  const today_=today();const todayOrds=list.filter(o=>(o.date||'').startsWith(today_));
+  const qty=list.reduce((s,o)=>s+(o.items||[]).reduce((a,i)=>a+i.q,0),0);
+  const sum=list.reduce((s,o)=>s+(o.total||0),0);
+  const todaySum=todayOrds.reduce((s,o)=>s+(o.total||0),0);
+  const fact=list.filter(o=>o.status==='delivered').reduce((s,o)=>s+(o.total||0),0);
+  const STN={new:'Новый',proc:'В обработке',shipped:'Отгружён'};
+  const STC={new:'blue',proc:'amber',shipped:'green'};
+  $('#page').innerHTML=`
+  <div class="search"><input placeholder="Поиск" value="${esc(OQ)}" oninput="OQ=this.value;vOrders()"></div>
+  <div class="summary">
+    <h4>Заказы <span style="color:#8696B5">▾</span></h4>
+    <div class="sr"><span>Количество продукта</span><b>${qty}</b></div>
+    <div class="sr"><span>Количество заказов</span><b>${list.length}</b></div>
+    <div class="sr"><span>Заказы за сегодня</span><b>${money(todaySum)}</b></div>
+    <div class="sr" style="border-top:1px solid rgba(255,255,255,.1);padding-top:13px"><span>Сумма заказов</span><b>${money(sum)}</b></div>
+    <div class="sr"><span>Факт продажа</span><b>${money(fact)}</b></div>
+  </div>
+  <div class="chiprow">
+    ${[['all','Все'],['new','Новый'],['proc','В обработке'],['shipped','Отгружён']].map(([v,l])=>`<button class="chip ${OFILT===v?'on':''}" onclick="OFILT='${v}';vOrders()">${l}</button>`).join('')}
+  </div>
+  ${list.length?list.map(o=>{const c=cli(o.client);const st=statusOf(o);
+    return `<div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.6"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6"/></svg>
+        <b style="font-size:17px">${esc(o.number||'—')}</b><span class="pill ${STC[st]}">${STN[st]}</span></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Номер заказа</span><b style="color:var(--accent)">${esc(o.number||'—')}</b></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Клиент</span><b>${esc(c?.name||'')}</b></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Дата заказа</span><b>${String(o.date||'').split('T')[0]}</b></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Сумма заказа</span><b>${money(o.total||0)}</b></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Доставлен</span><b>${o.status==='delivered'?money(o.total||0):money(0)}</b></div>
+      <div class="row" style="padding:7px 0"><span class="hint">Возврат с полки</span><b style="color:var(--red)">${money(o.returnAmt||0)}</b></div>
+      <div class="row" style="padding:7px 0;border:none"><span class="hint">Количество</span><b>${(o.items||[]).reduce((a,i)=>a+i.q,0)}</b></div>
+    </div>`}).join(''):`<div class="empty">Заказов нет</div>`}`;
+}
+let HQ='',HD='';
+function vHistory(){
+  let list=[...ST.outbox.map(x=>({...x,pending:true})),...MYTX];
+  if(HD)list=list.filter(t=>(t.payload.date||'').startsWith(HD));
+  if(HQ){const q=HQ.toLowerCase();list=list.filter(t=>{const c=cli(t.payload.client);return c&&(c.name||'').toLowerCase().includes(q);});}
+  const TN={order:T('order'),visit:'Визит',return:T('ret'),client:T('client')};
+  $('#page').innerHTML=`<h3 style="margin-bottom:10px">${T('history')}</h3>
+  <div class="search"><input type="date" value="${HD}" onchange="HD=this.value;vHistory()" style="flex:0 0 46%">
+    <input placeholder="🔍" value="${esc(HQ)}" oninput="HQ=this.value;vHistory()"></div>
+  ${list.slice(0,150).map(t=>{const c=cli(t.payload.client);
+    return `<div class="card"><div class="row" style="border:none;padding:0">
+      <div><b>${TN[t.type]||t.type}</b> · ${esc(c?.name||'')}
+        <div class="hint">${esc((t.payload.at||t.payload.createdAt||t.payload.date||'').replace('T',' '))}</div></div>
+      <div style="text-align:right">${t.payload.total?'<b>'+money(t.payload.total)+'</b>':t.payload.amount?'<b>'+money(t.payload.amount)+'</b>':''}
+        ${t.pending?`<div class="pill amber">${T('pend')}</div>`:''}</div></div></div>`}).join('')||`<div class="empty">—</div>`}`;
+}
+
+/* ---------- KPI ---------- */
+function vKpi(){
+  const m=me();const mon=today().slice(0,7);
+  const ords=myOrders().map(t=>t.payload).filter(o=>(o.date||'').startsWith(mon));
+  const adminOrds=(DATA.orders||[]).filter(o=>o.agent===m.id&&(o.date||'').startsWith(mon));
+  const all=[...ords,...adminOrds.filter(a=>!ords.some(o=>o.id===a.id))];
+  const sum=all.reduce((s,o)=>s+o.total,0);
+  const vis=[...MYTX,...ST.outbox].filter(t=>t.type==='visit'&&(t.payload.date||'').startsWith(mon)).length;
+  const rules=(DATA.kpis||[]).filter(k=>k.active!==false&&(k.applyTo==='all'||k.applyTo===m.role));
+  let bonus=0;const lines=rules.map(k=>{let v=0;
+    if(k.type==='fixed')v=k.rate;
+    else if(k.type==='sum')v=sum*k.rate/100;
+    else if(k.type==='visit')v=vis*k.rate;
+    else if(k.type==='qty')v=all.reduce((s,o)=>s+(o.items||[]).reduce((a,i)=>a+i.q,0),0)*k.rate;
+    else if(k.type==='newClient')v=[...MYTX,...ST.outbox].filter(t=>t.type==='client'&&(t.payload.created||'').startsWith(mon)).length*k.rate;
+    bonus+=v;return {n:k.name,v};});
+  $('#page').innerHTML=`<h3 style="margin-bottom:10px">${T('kpi')} · ${mon}</h3>
+  <div class="kgrid">
+    <div class="kpi"><div class="l">${T('sum')}</div><div class="v" style="font-size:16px">${money(sum)}</div></div>
+    <div class="kpi"><div class="l">${T('visitsToday').split(' ')[0]}</div><div class="v">${vis}</div></div>
+  </div>
+  <div class="card">${lines.length?lines.map(l=>`<div class="row"><span>${esc(l.n)}</span><b>${money(l.v)}</b></div>`).join(''):`<div class="empty">${T('noData')}</div>`}
+    <div class="row"><b>${T('total')}</b><b style="color:var(--green)">${money(bonus)}</b></div></div>
+  <div class="hint">Прогноз по правилам KPI из админ-панели. Точный расчёт делает администратор.</div>`;
+}
+
+/* ---------- КАРТА МАРШРУТОВ ---------- */
+let MFILT={scope:'mine',days:null,route:'all'},MMAP=null,MROUTE=null;
+function loadYmaps(cb){
+  const key=(DATA.integrationsPublic&&DATA.integrationsPublic.yandex&&DATA.integrationsPublic.yandex.apikey)||'';
+  if(window.ymaps&&window.ymaps.Map){ymaps.ready(cb);return;}
+  if(window._ymload){const w=setInterval(()=>{if(window.ymaps&&window.ymaps.Map){clearInterval(w);ymaps.ready(cb);}},250);return;}
+  window._ymload=1;const s=document.createElement('script');
+  s.src='https://api-maps.yandex.ru/2.1/?lang=ru_RU'+(key?'&apikey='+encodeURIComponent(key):'');
+  s.onload=()=>ymaps.ready(cb);document.head.appendChild(s);
+}
+function vMap(){
+  const m=me();
+  const myRoutes=L('routes').filter(r=>(!m.terr||r.terr===m.terr)&&!((m.restrictRoutes||[]).includes(r.id)));
+  if(!MFILT.days)MFILT.days=myRoutes.map(r=>r.id);
+  $('#page').innerHTML=`<h3 style="margin-bottom:10px">${T('map')}</h3>
+  <div class="seg"><button class="${MFILT.scope==='mine'?'on':''}" onclick="MFILT.scope='mine';vMap()">${T('myClients2')}</button>
+    <button class="${MFILT.scope==='all'?'on':''}" onclick="MFILT.scope='all';vMap()">${T('allClients')}</button></div>
+  <div class="chiprow">${myRoutes.map(r=>`<button class="chip ${MFILT.days.includes(r.id)?'on':''}" onclick="mapToggleDay('${r.id}')">${esc(r.name)}</button>`).join('')}</div>
+  <div id="map"></div>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <button class="btn gold" style="flex:1" onclick="buildRoute()">🧭 ${T('buildRoute')}</button>
+    <button class="btn ghost" style="flex:1" onclick="MFILT.days=${JSON.stringify(myRoutes.map(r=>r.id))};vMap()">${T('all')}</button></div>
+  <div class="hint" style="margin-top:8px">🟢 ${T('visited')} · ⚪ ${T('notVisited')} · 🔴 долг · нажмите точку для деталей и навигации</div>`;
+  loadYmaps(drawMobMap);
+}
+function mapToggleDay(id){const i=MFILT.days.indexOf(id);if(i>=0)MFILT.days.splice(i,1);else MFILT.days.push(id);vMap();}
+function mapClients(){
+  const base=MFILT.scope==='mine'?myClients():L('clients').filter(c=>c.active!==false&&allowedClient(c));
+  // фильтр по выбранным маршрутам-дням
+  let list=base.filter(c=>!c.route||MFILT.days.includes(c.route));
+  return list.filter(c=>c.lat&&c.lng);
+}
+function drawMobMap(){
+  const el=document.getElementById('map');if(!el)return;
+  if(MMAP){try{MMAP.destroy();}catch(e){}MMAP=null;}
+  const cls=mapClients();
+  const center=GEO||(cls[0]?[cls[0].lat,cls[0].lng]:[41.311,69.279]);
+  MMAP=new ymaps.Map('map',{center,zoom:12,controls:['zoomControl','geolocationControl']});
+  const clusterer=new ymaps.Clusterer({preset:'islands#invertedGreenClusterIcons',groupByCoordinates:false,clusterDisableClickZoom:false,gridSize:80});
+  const pms=cls.map(c=>{
+    const v=visitedToday(c.id);const debt=c.debt>0;
+    const preset=v?'islands#darkGreenCircleDotIcon':debt?'islands#redCircleDotIcon':'islands#grayCircleDotIcon';
+    return new ymaps.Placemark([c.lat,c.lng],{
+      balloonContentHeader:esc(c.name),
+      balloonContentBody:esc(c.addr||'')+(c.debt>0?'<br><b style="color:#E2574C">Долг: '+money(c.debt)+'</b>':'')+(c.debt<0?'<br><b style="color:#1E9E6A">Депозит: '+money(-c.debt)+'</b>':'')+'<br>'+esc(route(c.route)?.name||'')+'<br><a href="https://yandex.ru/maps/?rtext=~'+c.lat+'%2C'+c.lng+'&rtt=auto" target="_blank">Маршрут</a>',
+      hintContent:esc(c.name)},{preset});
+  });
+  clusterer.add(pms);MMAP.geoObjects.add(clusterer);
+  if(GEO){MMAP.geoObjects.add(new ymaps.Placemark(GEO,{hintContent:'Вы здесь'},{preset:'islands#blueCircleDotIcon'}));}
+  try{if(pms.length>1)MMAP.setBounds(clusterer.getBounds(),{checkZoomRange:true,zoomMargin:40});}catch(e){}
+}
+/* построить маршрут по точкам дня (через геопозицию → все точки по близости) */
+function buildRoute(){
+  const cls=mapClients().filter(c=>!visitedToday(c.id));  // ещё не посещённые
+  if(!cls.length){toast('Нет точек для маршрута');return;}
+  loadYmaps(()=>{
+    if(!MMAP)return;
+    if(MROUTE){try{MMAP.geoObjects.remove(MROUTE);}catch(e){}MROUTE=null;}
+    // сортируем по близости от текущей позиции (жадный ближайший сосед)
+    const start=GEO||[cls[0].lat,cls[0].lng];
+    const pts=cls.map(c=>[c.lat,c.lng]);const ordered=[];const used=new Set();let cur=start;
+    while(ordered.length<pts.length){let bi=-1,bd=1e9;
+      pts.forEach((p,i)=>{if(used.has(i))return;const d=distKm(cur,p)||1e9;if(d<bd){bd=d;bi=i;}});
+      if(bi<0)break;used.add(bi);ordered.push(pts[bi]);cur=pts[bi];}
+    const way=[start,...ordered];
+    MROUTE=new ymaps.multiRouter.MultiRoute({referencePoints:way,params:{routingMode:'auto'}},
+      {boundsAutoApply:true,routeActiveStrokeColor:'C9A227',routeActiveStrokeWidth:5});
+    MMAP.geoObjects.add(MROUTE);
+    toast('Маршрут построен: '+ordered.length+' точек');
+  });
+}
+
+/* ---------- ЕЩЁ ---------- */
+function vNotif(){
+  const m=me();
+  let list=(DATA.notifications||[]).filter(n=>n.to===m.id).sort((a,b)=>String(b.created||b.date).localeCompare(String(a.created||a.date)));
+  let changed=false;
+  (DATA.notifications||[]).forEach(n=>{if(n.to===m.id&&!n.read){n.read=true;changed=true;}});
+  if(changed){localStorage.setItem('halwaa_mob_data',JSON.stringify(DATA));
+    txSend('notifread',{id:'nr_'+m.id+'_'+Date.now(),sup:m.id,at:now()});}
+  $('#page').innerHTML=`
+  <div style="font-size:19px;font-weight:800;margin:2px 0 14px">Уведомления о нарушениях</div>
+  ${list.length?list.map(n=>{const ag=emp2(n.agent);
+    return `<div class="card" style="border-left:3px solid var(--red)">
+      <div style="display:flex;justify-content:space-between;gap:10px">
+        <b style="font-size:15px">${esc(ag?ag.name:'Сотрудник')}</b>
+        <span class="hint">${String(n.date||'').split('-').reverse().slice(0,2).join('.')}</span></div>
+      <div style="margin-top:6px;font-size:14px;line-height:1.5">${esc(n.text||'')}</div>
+    </div>`}).join(''):`<div class="card"><div class="empty">Нет уведомлений. Когда у прикреплённых торговых представителей появятся нарушения — они появятся здесь.</div></div>`}`;
+}
+function emp2(id){return L('employees').find(e=>e.id===id);}
+function vMore(){
+  $('#page').innerHTML=`
+  <div class="card">
+    <div class="row" onclick="go('orders')"><b>🧾 ${T('myOrders')}</b><span>›</span></div>
+    <div class="row" onclick="go('history')"><b>🕓 ${T('history')}</b><span>›</span></div>
+    <div class="row" onclick="go('kpi')"><b>🏆 ${T('kpi')}</b><span>›</span></div>
+    <div class="row" onclick="go('ships')"><b>🚚 ${T('ships')}</b><span>›</span></div>
+    <div class="row" onclick="expenseForm()"><b>🧾 ${T('expense')}</b><span>›</span></div>
+    <div class="row" onclick="go('map')"><b>🗺 ${T('map')}</b><span>›</span></div>
+  </div>
+  <div class="card">
+    <div class="row" onclick="syncAll(true)"><b>⟳ ${T('sync')}</b></div>
+    <div class="row" onclick="accMenu()"><b>👤 ${T('profile')}</b><span>›</span></div>
+  </div>
+  <div class="hint" style="text-align:center">HALWAA BARAKA · mobile v1</div>`;
+}
+/* расходы доставщика: фиксированные категории; «свои» идут в зарплату */
+const EXP_CATS=[
+  {cat:'Авто',sub:'Топливо',salary:false},
+  {cat:'Авто',sub:'Стоянка',salary:false},
+  {cat:'Авто',sub:'Мойка / ремонт',salary:false},
+  {cat:'Свои расходы',sub:'Личные (в счёт зарплаты)',salary:true}
+];
+function expenseForm(){
+  openM(`<h2>${T('expense')}</h2>
+    <div class="field"><label>${T('expCat')}</label><select id="ex_c">${EXP_CATS.map((e,i)=>`<option value="${i}">${e.cat} · ${e.sub}</option>`).join('')}</select></div>
+    <div class="field"><label>${T('sum')}</label><input id="ex_a" type="number" placeholder="0"></div>
+    <div class="field"><label>${T('comment')}</label><input id="ex_n" placeholder="—"></div>
+    <button class="btn primary" onclick="sendExpense()">${T('send')}</button>`);
+}
+function sendExpense(){
+  const i=+$('#ex_c').value;const e=EXP_CATS[i];const a=+$('#ex_a').value||0;
+  if(a<=0){toast(T('sum'));return;}
+  const p={id:uid('x'),agent:me().id,date:today(),at:now(),cat:e.cat,sub:e.sub,salary:e.salary,amount:a,note:($('#ex_n')?.value||'').trim()};
+  txSend('expense',p);
+  closeM();
+}
+
+/* ---------- синхронизация ---------- */
+async function syncAll(loud){
+  try{await kvLoad();await txLoadMine();await flushOutbox();if(loud)toast('✓');}catch(e){if(loud)toast('Ошибка сети');}
+  closeM();render();
+}
+
+/* ===== РАЗВЛЕКАТЕЛЬНЫЕ УВЕДОМЛЕНИЯ (советы дня) ===== */
+function tipShown(key){try{const d=JSON.parse(localStorage.getItem('tips_'+today())||'{}');return !!d[key];}catch(e){return false;}}
+function tipMark(key){try{const d=JSON.parse(localStorage.getItem('tips_'+today())||'{}');d[key]=1;localStorage.setItem('tips_'+today(),JSON.stringify(d));}catch(e){}}
+function notify(title,body){
+  try{if(typeof Notification!=='undefined'&&Notification.permission==='granted'){new Notification(title,{body});}}catch(e){}
+  toast(title.replace(/^[^ ]+ /,'')+' · '+body);
+  if(navigator.vibrate)navigator.vibrate(120);
+}
+function tipPool(){
+  const h=new Date().getHours();
+  const ped=(function(){try{return JSON.parse(localStorage.getItem('ped_'+(me()&&me().id||'me')+'_'+today()))||{steps:0};}catch(e){return{steps:0};}})();
+  const km=(ped.steps*0.00075).toFixed(1),kcal=Math.round(ped.steps*0.04);
+  const wx=WX&&WX.daily;const rain=wx&&wx.precipitation_probability_max?wx.precipitation_probability_max[0]:null;
+  const temp=WX&&WX.current?WX.current.temperature_2m:null;
+  const tips=[];
+  // погодные
+  if(rain!=null&&rain>=40)tips.push(['umbrella','☔ Погода','Сегодня дождь '+rain+'% — возьми зонтик!']);
+  if(temp!=null&&temp>=33)tips.push(['hot','🥵 Жара','Сегодня '+Math.round(temp)+'° — пей больше воды и не перегревайся!']);
+  if(temp!=null&&temp>=30)tips.push(['glasses','😎 Солнце','Солнечно — надень очки и кепку.']);
+  if(temp!=null&&temp<=5)tips.push(['cold','🧥 Холодно','Сегодня '+Math.round(temp)+'° — одевайся теплее.']);
+  // по времени
+  if(h<10)tips.push(['greethello','👋 Приветствие',greetMsg(me()&&me().name).replace(/[👋💪☀️📈🚗🌟🔥💰👍🏆😊🤝✅😃🍪💚☕🎯]/g,'').trim()]);
+  if(h<10)tips.push(['morning','🌅 Доброе утро','Удачного дня и больших продаж! Начни маршрут вовремя.']);
+  if(h>=12&&h<14)tips.push(['lunch','🍽 Обед','Не забудь пообедать — силы нужны для работы.']);
+  if(h>=12&&h<14)tips.push(['water','💧 Вода','Выпей стакан воды — держи себя в тонусе.']);
+  if(h>=16)tips.push(['evening','🌆 Вечер','Заверши визиты и отметь отчёты по точкам.']);
+  // шагомер
+  if(ped.steps>=3000&&ped.steps<5000)tips.push(['s3k','🚶 Шаги','Уже '+ped.steps+' шагов ('+km+' км)! Так держать.']);
+  if(ped.steps>=5000&&ped.steps<8000)tips.push(['s5k','🔥 Калории','Сожжено ~'+kcal+' ккал за '+km+' км. Отличная активность!']);
+  if(ped.steps>=8000)tips.push(['s8k','🏆 Цель','Поздравляем! 8000 шагов пройдено — '+kcal+' ккал. Ты молодец!']);
+  if(ped.steps>=10000)tips.push(['s10k','💪 Рекорд','10 000 шагов! Сегодня ты прошёл '+km+' км — супер форма.']);
+  // мотивация (всегда доступны, разные)
+  const motiv=[
+    ['m1','💼 Совет','Улыбка и приветствие — половина успеха в торговой точке.'],
+    ['m2','📈 Совет','Предложи клиенту новинку — это плюс к продажам.'],
+    ['m3','📸 Напоминание','Не забудь сделать фото витрины в точке.'],
+    ['m4','🤝 Совет','Узнай у клиента, что продаётся лучше — поможет с заказом.'],
+    ['m5','⭐ Мотивация','Каждый визит — шаг к выполнению плана. Вперёд!'],
+    ['m6','🧾 Совет','Проверь остатки на полке перед оформлением заказа.'],
+    ['m7','😊 Мотивация','Хорошее настроение клиента = хорошая продажа.'],
+  ];
+  // добавляем один мотивационный по часу дня
+  tips.push(motiv[h%motiv.length]);
+  // === 20 ПРОДАЮЩИХ уведомлений (ротация по дню+часу) ===
+  const sales=[
+    ['sl1','📈 Продажи','Сегодня — твой день рекордов! Предложи каждому клиенту на 1 позицию больше.'],
+    ['sl2','⏰ Не опаздывай','Опоздание = потеря клиента. Будь в точке вовремя!'],
+    ['sl3','🚪 Заходи в магазин','Не зайдёшь в магазин — не будет продаж. Каждая дверь — это заказ!'],
+    ['sl4','⌛ Не уходи рано','Ранний уход с маршрута = упущенная выручка. Доведи день до конца!'],
+    ['sl5','🍪 Трубочки','Трубочки — наш хит! Поставь их на видное место у клиента.'],
+    ['sl6','💰 Средний чек','Подними средний чек: предложи новинку к основному заказу.'],
+    ['sl7','🤝 Новый клиент','Найди сегодня хотя бы 1 новую точку — это рост твоей базы.'],
+    ['sl8','📦 Выкладка','Хорошая выкладка продаёт сама. Поправь полку HALWAA в каждой точке.'],
+    ['sl9','🔥 Допродажа','Клиент берёт халву? Предложи и трубочки — две продажи вместо одной.'],
+    ['sl10','📸 Фотоотчёт','Сделай фото витрины — это часть профессиональной работы.'],
+    ['sl11','💪 План','До плана осталось немного — ещё пара заказов, и ты в цели!'],
+    ['sl12','🎯 Цель дня','Поставь цель: +10% к вчерашним продажам. Ты сможешь!'],
+    ['sl13','😊 Улыбка','Улыбнись клиенту — довольный клиент покупает больше.'],
+    ['sl14','📋 Заказ','Не уходи без заказа. «Нет» сегодня — это «да» при правильном подходе.'],
+    ['sl15','🏪 Каждая точка','Посети все точки маршрута — пропущенная точка = потерянные деньги.'],
+    ['sl16','🆕 Новинка','Расскажи клиенту о новинке — люди любят пробовать новое.'],
+    ['sl17','💵 Собери долг','Напомни должникам об оплате — деньги в кассе важнее обещаний.'],
+    ['sl18','⭐ Лидер','Лучшие торговые делают на 30% больше визитов. Будь в их числе!'],
+    ['sl19','📲 Отметь визит','Отмечай каждый визит в приложении — это твой результат и бонус.'],
+    ['sl20','🚀 Финиш','Последние точки дня — самые важные. Закрой день на максимуме!'],
+  ];
+  const day=parseInt((today()||'').replace(/-/g,''))||0;
+  tips.push(sales[(day+h)%sales.length]);
+  tips.push(sales[(day+h+7)%sales.length]);  // второй продающий за цикл
+  return tips;
+}
+let _tipTimer=null;
+function tipTick(){
+  if(!me())return;
+  const pool=tipPool().filter(t=>!tipShown(t[0]));
+  if(!pool.length)return;
+  const t=pool[0];tipMark(t[0]);notify(t[1],t[2]);
+}
+function startTips(){
+  if(_tipTimer)return;
+  // первый совет через 30 сек после входа, далее каждые 20 минут (15-20 за день)
+  setTimeout(tipTick,30000);
+  _tipTimer=setInterval(tipTick,20*60000);
+}
+
+/* ---------- старт ---------- */
+(function init(){
+  try{DATA=JSON.parse(localStorage.getItem('halwaa_mob_data')||'{}');}catch(e){DATA={};}
+  try{MYTX=JSON.parse(localStorage.getItem('halwaa_mob_tx')||'[]');}catch(e){MYTX=[];}
+  ST.pinOk=false;
+  render();
+  geoStart();
+  if(sbOk()){kvLoad().then(()=>{txLoadMine();flushOutbox();render();}).catch(()=>{});}
+  setInterval(()=>{if(me())flushOutbox();},60000);
+  // живая связь с админкой: данные и правила обновляются сами
+  setInterval(()=>{if(sbOk()&&me()&&!$('#mbg').classList.contains('open')&&!VISIT){
+    kvLoad().then(()=>{txLoadMine();render();}).catch(()=>{});}},30000);
+  // ОТДЕЛЬНО: проверка, не отключил ли админ аккаунт (работает даже во время визита)
+  setInterval(()=>{if(sbOk()&&me())checkMyAccount();},25000);
+  // ПРИСУТСТВИЕ: пинг «я в сети» сразу и каждые 30 секунд
+  sendPresence();
+  setInterval(()=>{if(me())sendPresence();},30000);
+  // развлекательные советы дня (зонтик, вода, шаги, мотивация) + погода для них
+  if(me()){wxLoad();startTips();PED=pedLoad();alarmEnsureTimer();initPush();}
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&sbOk()&&me()){
+    checkMyAccount();sendPresence();
+    kvLoad().then(()=>{txLoadMine();flushOutbox();if(!$('#mbg').classList.contains('open')&&!VISIT)render();}).catch(()=>{});}});
+})();
+async function checkMyAccount(){
+  if(!me())return;
+  if(ST.cur==='demo')return;   // демо-аккаунт всегда активен
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/crm_kv?select=value&key=eq.employees',{headers:H()});
+    if(!r.ok)return;const rows=await r.json();const emps=(rows[0]&&rows[0].value)||[];
+    const e=emps.find(x=>x.id===ST.cur);
+    if(!e||e.active===false){          // меня удалили или отключили
+      const nm=me().name;
+      ST.accounts=ST.accounts.filter(a=>a.id!==ST.cur);
+      ST.cur=ST.accounts[0]?.id||null;ST.pinOk=ST.cur?ST.pinOk:false;VISIT=null;save();closeM();
+      toast('Аккаунт «'+nm+'» отключён администратором');render();
+    }else{ // обновим пароль/доступы на случай смены
+      const a=me();if(a){a.password=e.password;a.active=e.active;a.caps=e.caps||{};a.terr=e.terr||'';
+        a.restrictCats=e.restrictCats||[];a.restrictTerrs=e.restrictTerrs||[];a.restrictRoutes=e.restrictRoutes||[];
+        a.restrictProducts=e.restrictProducts||[];a.restrictTypes=e.restrictTypes||[];save();}
+    }
+  }catch(e){}
+}
+</script>
+</body>
+</html>
